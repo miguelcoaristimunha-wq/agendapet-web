@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0d9488" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.12" />
+    </filter>
+  </defs>
+
+  <!-- Simbolo com pata estilizada -->
+  <g transform="translate(10, 10)" filter="url(#shadow)">
+    <rect width="60" height="60" rx="16" fill="url(#logoGrad)" />
+    <!-- Almofadas dos dedos -->
+    <circle cx="21" cy="22" r="5" fill="#ffffff" />
+    <circle cx="30" cy="15" r="5" fill="#ffffff" />
+    <circle cx="39" cy="22" r="5" fill="#ffffff" />
+    <!-- Coxim central -->
+    <ellipse cx="30" cy="38" rx="11" ry="9.5" fill="#ffffff" />
+    <path d="M24 43 Q30 47 36 43" stroke="#0284c7" stroke-width="2" stroke-linecap="round" fill="none" />
+  </g>
+
+  <!-- Tipografia -->
+  <text x="84" y="42" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, sans-serif" font-size="28" font-weight="800" fill="#0f172a" letter-spacing="-0.5">
+    Agenda<tspan fill="#0284c7">Pet</tspan>
+  </text>
+  <text x="86" y="60" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#64748b" letter-spacing="1.5">
+    PATINHAS &amp; CIA • PAINEL WEB
+  </text>
+</svg>
