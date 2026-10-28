@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="favGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0f766e" />
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="12" fill="url(#favGrad)" />
+  <!-- Paw print icon -->
+  <circle cx="16" cy="17" r="4.2" fill="#ffffff" opacity="0.95" />
+  <circle cx="24" cy="12" r="4.2" fill="#ffffff" opacity="0.95" />
+  <circle cx="32" cy="17" r="4.2" fill="#ffffff" opacity="0.95" />
+  <ellipse cx="24" cy="29" rx="9" ry="7.5" fill="#ffffff" />
+  <path d="M19 33 Q24 37 29 33" stroke="#0284c7" stroke-width="1.8" stroke-linecap="round" fill="none" />
+</svg>

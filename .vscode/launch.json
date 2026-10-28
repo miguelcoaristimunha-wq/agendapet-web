@@ -1,0 +1,34 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "🐛 Depurar Fechamento do Dia (Node.js ESM)",
+      "program": "${workspaceFolder}/scripts/fechamento-dia.js",
+      "args": ["2026-10-30"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "🔍 Depurar Validador de Agenda (CommonJS)",
+      "program": "${workspaceFolder}/scripts/validar-agenda.cjs",
+      "args": ["data/agenda-invalida.json"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "🧪 Executar Testes Unitários com Debugger",
+      "program": "${workspaceFolder}/node_modules/.bin/node",
+      "runtimeArgs": ["--test", "tests/dominio.test.js"],
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ]
+}

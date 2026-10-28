@@ -1,0 +1,26 @@
+{
+  "name": "agendapet-web",
+  "version": "1.0.0",
+  "description": "AgendaPet Web — Painel de Agendamentos para Pet Shop Patinhas & Cia (Módulo 01 Front-End)",
+  "type": "module",
+  "scripts": {
+    "start": "http-server . -p 3000 -c-1 -o",
+    "fechamento": "node scripts/fechamento-dia.js",
+    "validar": "node scripts/validar-agenda.cjs",
+    "test": "node --test tests/dominio.test.js"
+  },
+  "keywords": [
+    "petshop",
+    "agendamento",
+    "vanilla-js",
+    "frontend",
+    "es-modules",
+    "commonjs",
+    "node"
+  ],
+  "author": "Miguel Corrêa <miguelcoaristimunha@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

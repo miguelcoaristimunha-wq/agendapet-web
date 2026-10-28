@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Painel de agendamentos para pet shop: cadastro com validação, consulta automática de CEP, alerta de feriados, fechamento do dia e controle financeiro.">
+  <meta name="theme-color" content="#0284c7">
+  <title>AgendaPet Web — Painel de Agendamentos para Pet Shop</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Link de acessibilidade para navegação rápida por teclado (US01) -->
+  <a href="#main-content" class="skip-link">Ir para o conteúdo principal</a>
+
+  <!-- Cabeçalho Principal (Landmark: header) -->
+  <header class="cabecalho-principal">
+    <div class="container-cabecalho">
+      <div class="logo-e-marca">
+        <img src="img/logo.svg" alt="Patinhas &amp; Cia — Painel de Agendamentos AgendaPet" class="logo-svg" width="220" height="55">
+      </div>
+
+      <!-- Relógio em tempo real e Lembrete de próximo atendimento (US09) -->
+      <div class="painel-tempo-real" aria-live="polite">
+        <div class="relogio-container">
+          <span class="relogio-icone" aria-hidden="true">🕒</span>
+          <time id="relogio-digital" class="relogio-digital" aria-label="Horário atual de Brasília">--:--:--</time>
+        </div>
+        <div id="badge-proximo-atendimento" class="badge-header badge-header-neutro" role="status">
+          Carregando atendimentos...
+        </div>
+      </div>
+
+      <!-- Controles de Acessibilidade e Interface -->
+      <div class="controles-topo">
+        <button type="button" id="btn-pausar-lembretes" class="btn btn-topo" aria-label="Pausar ou retomar lembretes automáticos">
+          ⏸ Pausar Lembretes
+        </button>
+        <button type="button" id="btn-alternar-tema" class="btn btn-topo" aria-label="Alternar tema de cores entre claro e escuro">
+          🌙 Modo Escuro
+        </button>
+      </div>
+    </div>
+
+    <!-- Navegação semântica interna (Landmark: nav) -->
+    <nav class="navegacao-secoes" aria-label="Navegação rápida entre as seções do painel">
+      <ul>
+        <li><a href="#sec-novo">➕ Novo Agendamento (Atalho: N)</a></li>
+        <li><a href="#sec-agenda">📅 Agenda do Dia (Atalho: /)</a></li>
+        <li><a href="#sec-fechamento">📊 Fechamento do Caixa</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Container de Notificação Flutuante (Toast acessível com role=status e aria-live) -->
+  <div id="toast-container" class="toast-container" role="status" aria-live="polite" hidden></div>
+
+  <!-- Conteúdo Principal (Landmark: main) -->
+  <main id="main-content" class="conteudo-principal">
+    <h1 class="titulo-pagina-oculto">AgendaPet Web — Painel de Operações da Patinhas &amp; Cia</h1>
+
+    <!-- GRID PRINCIPAL DE TRABALHO -->
+    <div class="layout-grid-dashboard">
+      
+      <!-- SEÇÃO 1: NOVO AGENDAMENTO (US03, US04, US05) -->
+      <section id="sec-novo" class="painel-secao painel-formulario" aria-labelledby="titulo-novo-agendamento">
+        <header class="secao-cabecalho">
+          <h2 id="titulo-novo-agendamento">➕ Novo Agendamento</h2>
+          <p class="secao-subtitulo">Cadastre um atendimento com validação imediata e checagem de conflitos.</p>
+        </header>
+
+        <!-- Catálogo de Serviços Expansível (US02) -->
+        <details class="catalogo-detalhes" open>
+          <summary class="catalogo-resumo">
+            <span>🐾 Catálogo de Serviços e Valores</span>
+            <span class="catalogo-dica">(clique para expandir ou recolher)</span>
+          </summary>
+          <div id="catalogo-servicos-container" class="catalogo-grid" aria-live="polite">
+            <!-- Inserido dinamicamente via JS (Carregando / Erro com retry / Sucesso) -->
+          </div>
+        </details>
+
+        <!-- Formulário de Agendamento -->
+        <form id="form-agendamento" class="formulario-agendamento" novalidate>
+          
+          <div class="linha-form">
+            <div class="grupo-campo">
+              <label for="tutor">Nome do Tutor(a) <span class="obrigatorio">*</span></label>
+              <input type="text" id="tutor" name="tutor" required minlength="3" autocomplete="name" placeholder="Ex: Mariana Souza">
+              <span id="erro-tutor" class="msg-erro-campo" role="alert" hidden></span>
+            </div>
+
+            <div class="grupo-campo">
+              <label for="telefone">Telefone / WhatsApp <span class="obrigatorio">*</span></label>
+              <input type="tel" id="telefone" name="telefone" required autocomplete="tel" placeholder="(48) 99999-9999">
+              <span id="erro-telefone" class="msg-erro-campo" role="alert" hidden></span>
+            </div>
+          </div>
+
+          <div class="linha-form">
+            <div class="grupo-campo">
+              <label for="pet">Nome do Pet <span class="obrigatorio">*</span></label>
+              <input type="text" id="pet" name="pet" required minlength="2" placeholder="Ex: Pipoca">
+              <span id="erro-pet" class="msg-erro-campo" role="alert" hidden></span>
+            </div>
+
+            <div class="grupo-campo">
+              <label for="especie">Espécie <span class="obrigatorio">*</span></label>
+              <select id="especie" name="especie" required>
+                <option value="">Selecione...</option>
+                <option value="Cão">🐶 Cão</option>
+                <option value="Gato">🐱 Gato</option>
+                <option value="Ave">🦜 Ave</option>
+                <option value="Roedor">🐹 Roedor</option>
+                <option value="Outro">🐾 Outro</option>
+              </select>
+              <span id="erro-especie" class="msg-erro-campo" role="alert" hidden></span>
+            </div>
+          </div>
+
+          <div class="grupo-campo">
+            <label for="servico">Serviço Pretendido <span class="obrigatorio">*</span></label>
+            <select id="servico" name="servico" required>
+              <option value="">Carregando serviços...</option>
+            </select>
+            <span id="erro-servico" class="msg-erro-campo" role="alert" hidden></span>
+          </div>
+
+          <div class="linha-form">
+            <div class="grupo-campo">
+              <label for="data">Data do Atendimento <span class="obrigatorio">*</span></label>
+              <input type="date" id="data" name="data" required>
+              <span id="erro-data" class="msg-erro-campo" role="alert" hidden></span>
+            </div>
+
+            <div class="grupo-campo">
+              <label for="horario">Horário (08:00 às 19:00) <span class="obrigatorio">*</span></label>
+              <input type="time" id="horario" name="horario" required min="08:00" max="19:00" step="900">
+              <span id="erro-horario" class="msg-erro-campo" role="alert" hidden></span>
+            </div>
+          </div>
+
+          <!-- Alerta dinâmico de Feriado Nacional (US05) -->
+          <div id="alerta-feriado-box" class="alerta-feriado" role="alert" hidden></div>
+
+          <!-- Opção de Atendimento Domiciliar (US04 / US07) -->
+          <div class="bloco-domicilio">
+            <label class="checkbox-container">
+              <input type="checkbox" id="check-domicilio" name="check-domicilio">
+              <span class="checkmark"></span>
+              <strong>Atendimento a Domicílio (+ Taxa de deslocamento R$ 30,00)</strong>
+            </label>
+            <p id="aviso-domicilio-indisponivel" class="texto-dica-aviso" hidden>
+              ℹ️ O serviço selecionado requer instalações e equipamentos da clínica física e não atende a domicílio.
+            </p>
+
+            <!-- Container expansível de Endereço via CEP (US04) -->
+            <div id="container-endereco" class="container-endereco-expansivel" hidden>
+              <div class="grupo-campo">
+                <label for="cep">CEP <span class="obrigatorio">*</span></label>
+                <div class="input-com-feedback">
+                  <input type="text" id="cep" name="cep" maxlength="9" placeholder="00000-000">
+                  <span id="feedback-cep" class="feedback-campo" aria-live="polite"></span>
+                </div>
+                <span id="erro-cep" class="msg-erro-campo" role="alert" hidden></span>
+              </div>
+
+              <div class="linha-form">
+                <div class="grupo-campo grupo-maior">
+                  <label for="logradouro">Logradouro / Rua <span class="obrigatorio">*</span></label>
+                  <input type="text" id="logradouro" name="logradouro" placeholder="Ex: Av. Mauro Ramos">
+                  <span id="erro-logradouro" class="msg-erro-campo" role="alert" hidden></span>
+                </div>
+                <div class="grupo-campo grupo-menor">
+                  <label for="numero">Número <span class="obrigatorio">*</span></label>
+                  <input type="text" id="numero" name="numero" placeholder="Ex: 450">
+                  <span id="erro-numero" class="msg-erro-campo" role="alert" hidden></span>
+                </div>
+              </div>
+
+              <div class="linha-form">
+                <div class="grupo-campo">
+                  <label for="complemento">Complemento (opcional)</label>
+                  <input type="text" id="complemento" name="complemento" placeholder="Ex: Apto 302, Bloco B">
+                </div>
+                <div class="grupo-campo">
+                  <label for="bairro">Bairro <span class="obrigatorio">*</span></label>
+                  <input type="text" id="bairro" name="bairro" placeholder="Ex: Centro">
+                  <span id="erro-bairro" class="msg-erro-campo" role="alert" hidden></span>
+                </div>
+              </div>
+
+              <div class="linha-form">
+                <div class="grupo-campo grupo-maior">
+                  <label for="cidade">Cidade <span class="obrigatorio">*</span></label>
+                  <input type="text" id="cidade" name="cidade" placeholder="Ex: Florianópolis">
+                  <span id="erro-cidade" class="msg-erro-campo" role="alert" hidden></span>
+                </div>
+                <div class="grupo-campo grupo-menor">
+                  <label for="uf">UF <span class="obrigatorio">*</span></label>
+                  <input type="text" id="uf" name="uf" maxlength="2" placeholder="SC">
+                  <span id="erro-uf" class="msg-erro-campo" role="alert" hidden></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grupo-campo">
+            <label for="observacoes">Observações Clínicas ou Comportamentais</label>
+            <textarea id="observacoes" name="observacoes" rows="2" placeholder="Ex: Alérgico a perfume, não gosta de secador, medicação em uso..."></textarea>
+          </div>
+
+          <div class="botoes-form">
+            <button type="submit" id="btn-salvar-agendamento" class="btn btn-primario btn-bloco">
+              💾 Salvar Agendamento
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- SEÇÃO 2: AGENDA DO DIA (US06, US09) -->
+      <section id="sec-agenda" class="painel-secao painel-agenda" aria-labelledby="titulo-agenda-dia">
+        <header class="secao-cabecalho">
+          <div class="titulo-com-contador">
+            <h2 id="titulo-agenda-dia">📅 Agenda de Atendimentos</h2>
+            <span id="contador-agendamentos" class="contador-badge" aria-live="polite">0 agendamentos</span>
+          </div>
+          <p class="secao-subtitulo">Navegue, pesquise, conclua ou cancele serviços em tempo real.</p>
+        </header>
+
+        <!-- Barra de Ferramentas: Busca, Filtro de Data e Filtros de Status -->
+        <div class="barra-filtros">
+          <div class="campo-busca-wrapper">
+            <label for="campo-busca" class="visually-hidden">Buscar por tutor, pet ou protocolo</label>
+            <span class="icone-busca" aria-hidden="true">🔍</span>
+            <input type="search" id="campo-busca" placeholder="Buscar tutor, pet ou protocolo... (pressione / para focar)" autocomplete="off">
+          </div>
+
+          <div class="filtro-data-wrapper">
+            <label for="filtro-data">Data:</label>
+            <input type="date" id="filtro-data" title="Filtrar atendimentos por dia">
+          </div>
+
+          <div id="botoes-filtro-status" class="grupo-botoes-status" role="group" aria-label="Filtrar lista por status de atendimento">
+            <button type="button" class="btn-filtro filtro-ativo" data-status="Todos" aria-pressed="true">Todos</button>
+            <button type="button" class="btn-filtro" data-status="Agendado" aria-pressed="false">Agendados</button>
+            <button type="button" class="btn-filtro" data-status="Concluído" aria-pressed="false">Concluídos</button>
+            <button type="button" class="btn-filtro" data-status="Cancelado" aria-pressed="false">Cancelados</button>
+          </div>
+        </div>
+
+        <!-- Lista dinâmica dos agendamentos (Manipulada estritamente com createElement/textContent) -->
+        <div id="lista-agendamentos" class="lista-agendamentos-cards" aria-live="polite" role="region" aria-label="Cartões dos agendamentos do dia">
+          <!-- Cards criados via JS -->
+        </div>
+      </section>
+
+      <!-- SEÇÃO 3: FECHAMENTO DO DIA E CAIXA (US07, US08) -->
+      <section id="sec-fechamento" class="painel-secao painel-fechamento" aria-labelledby="titulo-fechamento">
+        <header class="secao-cabecalho secao-cabecalho-fechamento">
+          <div>
+            <h2 id="titulo-fechamento">📊 Fechamento do Caixa</h2>
+            <p class="secao-subtitulo">Resumo financeiro dos atendimentos concluídos e distribuição de serviços.</p>
+          </div>
+
+          <!-- Ações de Dados e Backup -->
+          <div class="botoes-fechamento-topo">
+            <button type="button" id="btn-exportar-agenda" class="btn btn-secundario" title="Exportar dados da agenda em formato JSON">
+              📥 Exportar JSON
+            </button>
+            <button type="button" id="btn-limpar-dados" class="btn btn-perigo-outline" title="Limpar dados do navegador e restaurar padrão">
+              🧹 Limpar Dados
+            </button>
+          </div>
+        </header>
+
+        <!-- Conteúdo do Fechamento consolidado -->
+        <div id="conteudo-fechamento" class="conteudo-fechamento-resumo" aria-live="polite">
+          <!-- Inserido dinamicamente via JS -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Barra Lateral de Ajuda e Atalhos (Landmark: aside) -->
+  <aside class="barra-dicas" aria-label="Orientações e atalhos rápidos do sistema">
+    <div class="container-dicas">
+      <div class="item-dica">
+        <strong>⌨️ Atalhos Rápidos:</strong>
+        <span><kbd>N</kbd> Novo Agendamento</span> •
+        <span><kbd>/</kbd> Focar Busca</span> •
+        <span><kbd>Esc</kbd> Limpar Busca / Fechar</span>
+      </div>
+      <div class="item-dica">
+        <strong>🏪 Expediente:</strong>
+        <span>Segunda a Sábado, das 08h00 às 19h00</span>
+      </div>
+      <div class="item-dica">
+        <strong>🚗 Atendimento Domiciliar:</strong>
+        <span>Taxa padrão de R$ 30,00 inclusa no cálculo automático</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Rodapé Institucional (Landmark: footer) -->
+  <footer class="rodape-principal">
+    <div class="container-rodape">
+      <div class="rodape-autor">
+        <p><strong>AgendaPet Web</strong> — Sistema de Gestão e Atendimento para Pet Shop</p>
+        <p>Desenvolvido por <strong>Miguel Corrêa</strong> • Curso Front-End React Turma T4 (Avaliação M1.2)</p>
+      </div>
+      <div class="rodape-links">
+        <p>Construído com HTML5 Semântico, CSS3 Flexbox/Grid, Vanilla JS ES Modules e Node.js</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal de Exportação JSON (US08 / US11) -->
+  <div id="modal-exportacao" class="modal-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="titulo-modal-exportacao">
+    <div class="modal-conteudo">
+      <div class="modal-header">
+        <h3 id="titulo-modal-exportacao">📦 Exportação dos Agendamentos (JSON)</h3>
+        <button type="button" id="btn-fechar-modal-exportacao" class="btn-fechar" aria-label="Fechar janela de exportação">✕</button>
+      </div>
+      <p class="modal-descricao">
+        Estes dados estão no formato lido pelos scripts de linha de comando do Node.js (<kbd>npm run fechamento</kbd> e <kbd>npm run validar</kbd>).
+      </p>
+      <textarea id="textarea-exportacao" class="textarea-exportacao" readonly rows="12"></textarea>
+      <div class="modal-acoes">
+        <button type="button" id="btn-copiar-json" class="btn btn-secundario">📋 Copiar JSON</button>
+        <button type="button" id="btn-baixar-json" class="btn btn-primario">💾 Baixar Arquivo .json</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ponto de entrada JavaScript usando ES Modules (US11) -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

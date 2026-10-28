@@ -1,0 +1,16 @@
+# Dependências locais do Node
+node_modules/
+
+# Logs de execução e depuração
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Variáveis de ambiente locais (caso venha a ter no futuro)
+.env
+.env.local
