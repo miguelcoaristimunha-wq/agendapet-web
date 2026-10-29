@@ -1,0 +1,46 @@
+[
+  {
+    "id": "ag-err-001",
+    "protocolo": "AP-9901",
+    "tipo": "presencial",
+    "telefone": "(48) 99123-4567",
+    "pet": "Rex",
+    "especie": "Cão",
+    "servicoId": "srv-banho-tosa",
+    "servicoNome": "Banho e Tosa Completa",
+    "data": "2026-10-30",
+    "horario": "08:30",
+    "status": "Agendado",
+    "valor": 85.0
+  },
+  {
+    "id": "ag-err-002",
+    "protocolo": "AP-9902",
+    "tipo": "presencial",
+    "tutor": "Joana Prado",
+    "telefone": "123",
+    "pet": "Mimi",
+    "especie": "Gato",
+    "servicoId": "srv-consulta-vet",
+    "servicoNome": "Consulta Veterinária Geral",
+    "data": "data-invalida-99",
+    "horario": "03:15",
+    "status": "Agendado",
+    "valor": 120.0
+  },
+  {
+    "id": "ag-err-003",
+    "protocolo": "AP-9903",
+    "tipo": "presencial",
+    "tutor": "Rodrigo Silva",
+    "telefone": "(48) 98877-6655",
+    "pet": "Bidu",
+    "especie": "Cão",
+    "servicoId": "srv-adestramento",
+    "servicoNome": "Adestramento Comportamental",
+    "data": "2026-10-30",
+    "horario": "08:30",
+    "status": "Agendado",
+    "valor": 110.0
+  }
+]
