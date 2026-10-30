@@ -1,6 +1,7 @@
 /**
  * js/ui.js
  * Gerenciador de interface do usuário, manipulação segura do DOM, eventos e renderização.
+ * Design minimalista e profissional estilo SaaS (sem emojis decorativos, sem poluição visual).
  * Conforme US06: Dados do usuário são SEMPRE inseridos com textContent (proteção contra XSS).
  */
 
@@ -12,14 +13,14 @@ import { exportarAgendaJsonFormatado, baixarArquivoAgendaJson, limparDadosProjet
 let toastTimeoutId = null;
 
 /**
- * Exibe uma mensagem flutuante (Toast) com temporizador seguro sem acúmulo de timers.
+ * Exibe uma notificação flutuante sutil e elegante.
  * Utiliza setTimeout e role="status" / aria-live="polite" para acessibilidade.
  * 
  * @param {string} mensagem
  * @param {'sucesso'|'erro'|'aviso'} [tipo='sucesso']
- * @param {number} [duracaoMs=4000]
+ * @param {number} [duracaoMs=3500]
  */
-export function exibirToast(mensagem, tipo = 'sucesso', duracaoMs = 4000) {
+export function exibirToast(mensagem, tipo = 'sucesso', duracaoMs = 3500) {
   const container = document.getElementById('toast-container');
   if (!container) return;
 
@@ -31,16 +32,15 @@ export function exibirToast(mensagem, tipo = 'sucesso', duracaoMs = 4000) {
   container.textContent = '';
   container.className = `toast-container toast-${tipo}`;
 
-  const icone = document.createElement('span');
-  icone.className = 'toast-icon';
-  icone.setAttribute('aria-hidden', 'true');
-  icone.textContent = tipo === 'sucesso' ? '✓' : tipo === 'erro' ? '⚠' : 'ℹ';
+  const indicador = document.createElement('span');
+  indicador.className = 'toast-indicador';
+  indicador.setAttribute('aria-hidden', 'true');
 
   const texto = document.createElement('span');
-  texto.className = 'toast-text';
+  texto.className = 'toast-mensagem';
   texto.textContent = mensagem;
 
-  container.appendChild(icone);
+  container.appendChild(indicador);
   container.appendChild(texto);
   container.hidden = false;
 
@@ -52,7 +52,7 @@ export function exibirToast(mensagem, tipo = 'sucesso', duracaoMs = 4000) {
 }
 
 /**
- * Renderiza o catálogo de serviços na seção informativa e atualiza o <select> do formulário.
+ * Renderiza o catálogo de serviços de forma limpa, compacta e alinhada.
  * Atende aos 3 estados da US02: Carregando, Erro (com botão) e Sucesso.
  * 
  * @param {Array<Object>} servicos
@@ -64,13 +64,12 @@ export function renderizarCatalogoServicos(servicos, servicoSelecionadoAtual = '
 
   if (!container || !selectServico) return;
 
-  // 1. Limpa container e select
   container.textContent = '';
   selectServico.textContent = '';
 
   const opcaoPadrao = document.createElement('option');
   opcaoPadrao.value = '';
-  opcaoPadrao.textContent = '-- Selecione um serviço do catálogo --';
+  opcaoPadrao.textContent = 'Selecione um serviço do catálogo';
   selectServico.appendChild(opcaoPadrao);
 
   if (!servicos || servicos.length === 0) {
@@ -81,60 +80,72 @@ export function renderizarCatalogoServicos(servicos, servicoSelecionadoAtual = '
     return;
   }
 
-  // 2. Cria cards informativos do catálogo
+  // Renderiza como lista tabular limpa
   servicos.forEach(servico => {
-    const card = document.createElement('article');
-    card.className = 'card-servico';
-    card.tabIndex = 0;
+    const item = document.createElement('div');
+    item.className = 'item-servico-catalogo';
+    item.tabIndex = 0;
 
-    const titulo = document.createElement('h3');
-    titulo.className = 'card-servico-titulo';
+    const info = document.createElement('div');
+    info.className = 'item-servico-info';
+
+    const linhaSuperior = document.createElement('div');
+    linhaSuperior.className = 'item-servico-topo';
+
+    const titulo = document.createElement('span');
+    titulo.className = 'item-servico-nome';
     titulo.textContent = servico.nome;
 
-    const duracao = document.createElement('span');
-    duracao.className = 'badge badge-duracao';
     const duracaoTexto = servico.duracaoMinutos >= 60
       ? `${(servico.duracaoMinutos / 60).toFixed(0)}h`
       : `${servico.duracaoMinutos} min`;
-    duracao.textContent = `⏱ ${duracaoTexto}`;
 
-    const preco = document.createElement('p');
-    preco.className = 'card-servico-preco';
+    const duracao = document.createElement('span');
+    duracao.className = 'item-servico-duracao';
+    duracao.textContent = duracaoTexto;
+
+    linhaSuperior.appendChild(titulo);
+    linhaSuperior.appendChild(duracao);
+
+    const desc = document.createElement('p');
+    desc.className = 'item-servico-desc';
+    desc.textContent = servico.descricao;
+
+    const modalidade = document.createElement('span');
+    modalidade.className = servico.aceitaDomicilio ? 'tag-modalidade tag-domiciliar' : 'tag-modalidade tag-presencial';
+    modalidade.textContent = servico.aceitaDomicilio ? 'Atende a domicílio' : 'Apenas na loja física';
+
+    info.appendChild(linhaSuperior);
+    info.appendChild(desc);
+    info.appendChild(modalidade);
+
+    const acao = document.createElement('div');
+    acao.className = 'item-servico-acao';
+
+    const preco = document.createElement('span');
+    preco.className = 'item-servico-preco';
     preco.textContent = `R$ ${Number(servico.preco).toFixed(2)}`;
-
-    const descricao = document.createElement('p');
-    descricao.className = 'card-servico-desc';
-    descricao.textContent = servico.descricao;
-
-    const footer = document.createElement('div');
-    footer.className = 'card-servico-footer';
-
-    const tagDomicilio = document.createElement('span');
-    tagDomicilio.className = servico.aceitaDomicilio ? 'tag tag-domicilio-sim' : 'tag tag-domicilio-nao';
-    tagDomicilio.textContent = servico.aceitaDomicilio ? '✓ Atende a domicílio' : '✕ Apenas na loja';
-    footer.appendChild(tagDomicilio);
 
     const btnSelecionar = document.createElement('button');
     btnSelecionar.type = 'button';
-    btnSelecionar.className = 'btn-link-acao';
-    btnSelecionar.textContent = 'Agendar este';
+    btnSelecionar.className = 'btn-selecionar-servico';
+    btnSelecionar.textContent = 'Selecionar';
     btnSelecionar.addEventListener('click', () => {
       selectServico.value = servico.id;
       selectServico.dispatchEvent(new Event('change'));
       const inputTutor = document.getElementById('tutor');
       if (inputTutor) inputTutor.focus();
-      exibirToast(`Serviço selecionado: ${servico.nome}`, 'aviso', 2500);
+      exibirToast(`Serviço selecionado: ${servico.nome}`, 'aviso', 2200);
     });
-    footer.appendChild(btnSelecionar);
 
-    card.appendChild(titulo);
-    card.appendChild(duracao);
-    card.appendChild(preco);
-    card.appendChild(descricao);
-    card.appendChild(footer);
-    container.appendChild(card);
+    acao.appendChild(preco);
+    acao.appendChild(btnSelecionar);
 
-    // Adiciona ao <select>
+    item.appendChild(info);
+    item.appendChild(acao);
+    container.appendChild(item);
+
+    // Alimenta o <select>
     const option = document.createElement('option');
     option.value = servico.id;
     option.textContent = `${servico.nome} — R$ ${Number(servico.preco).toFixed(2)} (${duracaoTexto})`;
@@ -159,27 +170,22 @@ export function renderizarErroCatalogo(mensagemErro, callbackTentarNovamente) {
   boxErro.className = 'alerta-erro-box';
   boxErro.setAttribute('role', 'alert');
 
-  const icone = document.createElement('span');
-  icone.className = 'alerta-erro-icone';
-  icone.textContent = '⚠️';
-
   const texto = document.createElement('p');
   texto.textContent = `Não foi possível carregar os serviços: ${mensagemErro}`;
 
   const btnReintentar = document.createElement('button');
   btnReintentar.type = 'button';
-  btnReintentar.className = 'btn btn-primario';
+  btnReintentar.className = 'btn btn-secundario btn-compacto';
   btnReintentar.textContent = 'Tentar novamente';
   btnReintentar.addEventListener('click', callbackTentarNovamente);
 
-  boxErro.appendChild(icone);
   boxErro.appendChild(texto);
   boxErro.appendChild(btnReintentar);
   container.appendChild(boxErro);
 }
 
 /**
- * Renderiza o estado de carregamento do catálogo (Skeleton/Spinner).
+ * Renderiza o estado de carregamento do catálogo de forma limpa.
  */
 export function renderizarCarregandoCatalogo() {
   const container = document.getElementById('catalogo-servicos-container');
@@ -191,10 +197,10 @@ export function renderizarCarregandoCatalogo() {
   loadingBox.setAttribute('aria-live', 'polite');
 
   const spinner = document.createElement('div');
-  spinner.className = 'spinner';
+  spinner.className = 'spinner-linear';
 
   const texto = document.createElement('p');
-  texto.textContent = 'Carregando serviços da Patinhas & Cia...';
+  texto.textContent = 'Carregando serviços...';
 
   loadingBox.appendChild(spinner);
   loadingBox.appendChild(texto);
@@ -203,7 +209,7 @@ export function renderizarCarregandoCatalogo() {
 
 /**
  * Renderiza a lista de agendamentos no painel da US06.
- * Utiliza estritamente createElement, textContent e classList.
+ * Design minimalista e profissional: visual tipo tabela/lista moderna, sem poluição.
  * 
  * @param {Array<Object>} agendamentos
  * @param {Object} opcoes
@@ -219,18 +225,18 @@ export function renderizarListaAgendamentos(agendamentos, { termoBusca = '', fil
   if (!container) return;
   container.textContent = '';
 
-  // 1. Filtragem por data (se houver data selecionada)
+  // 1. Filtragem por data
   let filtrados = agendamentos;
   if (dataSelecionada) {
     filtrados = filtrados.filter(item => item.data === dataSelecionada);
   }
 
-  // 2. Filtragem por status com callback (atendendo US07)
+  // 2. Filtragem por status com callback (US07)
   if (filtroStatus !== 'Todos') {
     filtrados = filtrarAgendamentos(filtrados, item => item.status === filtroStatus);
   }
 
-  // 3. Busca em tempo real por tutor ou pet
+  // 3. Busca em tempo real
   if (termoBusca && termoBusca.trim() !== '') {
     const termo = termoBusca.trim().toLowerCase();
     filtrados = filtrados.filter(item => {
@@ -250,182 +256,189 @@ export function renderizarListaAgendamentos(agendamentos, { termoBusca = '', fil
     contador.textContent = `${filtrados.length} ${plural}`;
   }
 
-  // 6. Estado de lista vazia amigável
+  // 6. Estado de lista vazia sóbrio
   if (filtrados.length === 0) {
     const cardVazio = document.createElement('div');
     cardVazio.className = 'card-vazio';
     cardVazio.setAttribute('role', 'status');
 
-    const icone = document.createElement('div');
-    icone.className = 'card-vazio-icone';
-    icone.textContent = '🐾';
-
     const titulo = document.createElement('h3');
+    titulo.className = 'card-vazio-titulo';
     titulo.textContent = 'Nenhum agendamento encontrado';
 
     const subtitulo = document.createElement('p');
+    subtitulo.className = 'card-vazio-desc';
     subtitulo.textContent = termoBusca || filtroStatus !== 'Todos'
-      ? 'Tente ajustar os filtros ou limpar o campo de busca (pressione Esc).'
-      : 'Não há atendimentos para esta data. Use o formulário ao lado para agendar um pet!';
+      ? 'Ajuste os filtros ou limpe o campo de busca com a tecla Esc.'
+      : 'Não há registros para a data selecionada. Utilize o formulário ao lado.';
 
-    cardVazio.appendChild(icone);
     cardVazio.appendChild(titulo);
     cardVazio.appendChild(subtitulo);
     container.appendChild(cardVazio);
     return;
   }
 
-  // 7. Renderização dos cards de agendamento
+  // 7. Renderização dos itens da agenda (Design refinado e legível)
   const agora = new Date();
   const horaAtualString = `${String(agora.getHours()).padStart(2, '0')}:${String(agora.getMinutes()).padStart(2, '0')}`;
   const dataHojeString = agora.toISOString().slice(0, 10);
 
   filtrados.forEach(item => {
     const instancia = criarAgendamento(item);
-    const card = document.createElement('article');
-    card.className = `card-agendamento status-${item.status.toLowerCase()}`;
-    card.tabIndex = 0;
-    card.dataset.id = item.id;
+    const linha = document.createElement('article');
+    linha.className = `linha-agendamento status-${item.status.toLowerCase()}`;
+    linha.tabIndex = 0;
+    linha.dataset.id = item.id;
 
-    // Cabeçalho do Card
-    const header = document.createElement('div');
-    header.className = 'card-header';
+    // Coluna 1: Horário e Status
+    const colTempo = document.createElement('div');
+    colTempo.className = 'col-tempo';
 
-    const horarioBadge = document.createElement('span');
-    horarioBadge.className = 'badge badge-horario';
-    horarioBadge.textContent = `⏰ ${item.horario}`;
-    header.appendChild(horarioBadge);
+    const horarioSpan = document.createElement('span');
+    horarioSpan.className = 'hora-agendamento';
+    horarioSpan.textContent = item.horario;
+    colTempo.appendChild(horarioSpan);
 
-    const protocoloSpan = document.createElement('span');
-    protocoloSpan.className = 'badge badge-protocolo';
-    protocoloSpan.textContent = item.protocolo;
-    header.appendChild(protocoloSpan);
+    const badgeStatus = document.createElement('span');
+    badgeStatus.className = `status-pill status-pill-${item.status.toLowerCase()}`;
+    badgeStatus.textContent = item.status;
+    colTempo.appendChild(badgeStatus);
 
-    const statusBadge = document.createElement('span');
-    statusBadge.className = `badge badge-status badge-${item.status.toLowerCase()}`;
-    statusBadge.textContent = item.status;
-    header.appendChild(statusBadge);
-
-    // Alerta de atraso ou atendimento próximo (US09)
+    // Indicador sutil de atraso ou atendimento iminente
     if (item.status === 'Agendado' && item.data === dataHojeString) {
       if (item.horario < horaAtualString) {
         const badgeAtraso = document.createElement('span');
-        badgeAtraso.className = 'badge badge-atrasado';
-        badgeAtraso.textContent = '⚠️ Horário Passou';
-        header.appendChild(badgeAtraso);
+        badgeAtraso.className = 'tag-alerta-tempo tag-tempo-atrasado';
+        badgeAtraso.textContent = 'Atrasado';
+        colTempo.appendChild(badgeAtraso);
       } else {
         const partesAg = item.horario.split(':').map(Number);
         const minutosAg = partesAg[0] * 60 + partesAg[1];
         const minutosAgora = agora.getHours() * 60 + agora.getMinutes();
-        const diferencaMinutos = minutosAg - minutosAgora;
+        const difMin = minutosAg - minutosAgora;
 
-        if (diferencaMinutos >= 0 && diferencaMinutos <= 15) {
-          const badgeProximo = document.createElement('span');
-          badgeProximo.className = 'badge badge-em-breve';
-          badgeProximo.textContent = `🔔 Em ${diferencaMinutos} min!`;
-          header.appendChild(badgeProximo);
+        if (difMin >= 0 && difMin <= 15) {
+          const badgeImediato = document.createElement('span');
+          badgeImediato.className = 'tag-alerta-tempo tag-tempo-breve';
+          badgeImediato.textContent = `Em ${difMin} min`;
+          colTempo.appendChild(badgeImediato);
         }
       }
     }
 
-    card.appendChild(header);
+    linha.appendChild(colTempo);
 
-    // Corpo do Card: Informações do Pet e Tutor
-    const corpo = document.createElement('div');
-    corpo.className = 'card-corpo';
+    // Coluna 2: Informações do Atendimento
+    const colInfo = document.createElement('div');
+    colInfo.className = 'col-info';
 
-    const infoPet = document.createElement('h3');
-    infoPet.className = 'card-pet-nome';
-    infoPet.textContent = `${item.pet} `;
+    const topoInfo = document.createElement('div');
+    topoInfo.className = 'topo-info';
 
-    const especieBadge = document.createElement('span');
-    especieBadge.className = 'badge badge-especie';
-    especieBadge.textContent = item.especie;
-    infoPet.appendChild(especieBadge);
-    corpo.appendChild(infoPet);
+    const nomePet = document.createElement('strong');
+    nomePet.className = 'nome-pet';
+    nomePet.textContent = item.pet;
 
-    const infoTutor = document.createElement('p');
-    infoTutor.className = 'card-info-tutor';
-    infoTutor.textContent = `Tutor: ${item.tutor} • ${item.telefone}`;
-    corpo.appendChild(infoTutor);
+    const especieTag = document.createElement('span');
+    especieTag.className = 'especie-tag';
+    especieTag.textContent = item.especie;
 
-    const infoServico = document.createElement('p');
-    infoServico.className = 'card-info-servico';
-    infoServico.textContent = `Serviço: ${item.servicoNome}`;
-    corpo.appendChild(infoServico);
+    const protocoloSpan = document.createElement('span');
+    protocoloSpan.className = 'codigo-protocolo';
+    protocoloSpan.textContent = item.protocolo;
 
-    // Atendimento domiciliar (US04 / US07)
+    topoInfo.appendChild(nomePet);
+    topoInfo.appendChild(especieTag);
+    topoInfo.appendChild(protocoloSpan);
+    colInfo.appendChild(topoInfo);
+
+    const dadosCliente = document.createElement('div');
+    dadosCliente.className = 'dados-cliente-meta';
+
+    const tutorTxt = document.createElement('span');
+    tutorTxt.textContent = `Tutor: ${item.tutor} • ${item.telefone}`;
+
+    const servicoTxt = document.createElement('span');
+    servicoTxt.className = 'servico-nome-meta';
+    servicoTxt.textContent = item.servicoNome;
+
+    dadosCliente.appendChild(tutorTxt);
+    dadosCliente.appendChild(servicoTxt);
+    colInfo.appendChild(dadosCliente);
+
+    // Endereço domiciliar
     if (item.tipo === 'domiciliar' && item.endereco) {
-      const infoEndereco = document.createElement('p');
-      infoEndereco.className = 'card-info-endereco';
       const end = item.endereco;
-      const textoEnd = `🏠 Domicílio: ${end.logradouro || ''}, ${end.numero || ''} ${end.complemento ? '(' + end.complemento + ')' : ''} - ${end.bairro || ''}, ${end.cidade || ''}/${end.uf || ''} (Taxa +R$ ${Number(item.taxaDeslocamento || 30).toFixed(2)})`;
-      infoEndereco.textContent = textoEnd;
-      corpo.appendChild(infoEndereco);
+      const endLinha = document.createElement('div');
+      endLinha.className = 'endereco-domiciliar-meta';
+      endLinha.textContent = `Domicílio: ${end.logradouro || ''}, ${end.numero || 'S/N'}${end.complemento ? ' (' + end.complemento + ')' : ''} — ${end.bairro || ''}, ${end.cidade || ''}/${end.uf || ''}`;
+      colInfo.appendChild(endLinha);
     }
 
     if (item.observacoes && item.observacoes.trim() !== '') {
-      const obs = document.createElement('p');
-      obs.className = 'card-observacoes';
-      obs.textContent = `Obs: ${item.observacoes}`;
-      corpo.appendChild(obs);
+      const obsLinha = document.createElement('p');
+      obsLinha.className = 'observacoes-meta';
+      obsLinha.textContent = item.observacoes;
+      colInfo.appendChild(obsLinha);
     }
 
-    card.appendChild(corpo);
+    linha.appendChild(colInfo);
 
-    // Rodapé com valor e botões de ação (US06)
-    const footer = document.createElement('div');
-    footer.className = 'card-footer';
+    // Coluna 3: Valor e Ações Rápidas
+    const colAcoes = document.createElement('div');
+    colAcoes.className = 'col-acoes';
 
-    const valorSpan = document.createElement('div');
-    valorSpan.className = 'card-valor';
-    valorSpan.textContent = `Total: R$ ${instancia.calcularValor().toFixed(2)}`;
-    footer.appendChild(valorSpan);
+    const valorSpan = document.createElement('span');
+    valorSpan.className = 'valor-agendamento';
+    valorSpan.textContent = `R$ ${instancia.calcularValor().toFixed(2)}`;
+    colAcoes.appendChild(valorSpan);
 
-    const grupoAcoes = document.createElement('div');
-    grupoAcoes.className = 'card-acoes';
+    const botoesArea = document.createElement('div');
+    botoesArea.className = 'botoes-acao-linha';
 
     if (item.status === 'Agendado') {
       const btnConcluir = document.createElement('button');
       btnConcluir.type = 'button';
-      btnConcluir.className = 'btn btn-pequeno btn-sucesso';
-      btnConcluir.textContent = '✓ Concluir';
+      btnConcluir.className = 'btn-acao-status btn-status-concluir';
+      btnConcluir.textContent = 'Concluir';
       btnConcluir.setAttribute('aria-label', `Concluir atendimento de ${item.pet}`);
       btnConcluir.addEventListener('click', () => aoAlterarStatus(item.id, 'Concluído'));
-      grupoAcoes.appendChild(btnConcluir);
+      botoesArea.appendChild(btnConcluir);
 
       const btnCancelar = document.createElement('button');
       btnCancelar.type = 'button';
-      btnCancelar.className = 'btn btn-pequeno btn-perigo';
-      btnCancelar.textContent = '✕ Cancelar';
+      btnCancelar.className = 'btn-acao-status btn-status-cancelar';
+      btnCancelar.textContent = 'Cancelar';
       btnCancelar.setAttribute('aria-label', `Cancelar atendimento de ${item.pet}`);
       btnCancelar.addEventListener('click', () => aoAlterarStatus(item.id, 'Cancelado'));
-      grupoAcoes.appendChild(btnCancelar);
+      botoesArea.appendChild(btnCancelar);
     } else {
       const btnReabrir = document.createElement('button');
       btnReabrir.type = 'button';
-      btnReabrir.className = 'btn btn-pequeno btn-secundario';
-      btnReabrir.textContent = '↺ Reabrir';
-      btnReabrir.setAttribute('aria-label', `Reabrir agendamento de ${item.pet}`);
+      btnReabrir.className = 'btn-acao-status btn-status-reabrir';
+      btnReabrir.textContent = 'Reabrir';
+      btnReabrir.setAttribute('aria-label', `Reabrir atendimento de ${item.pet}`);
       btnReabrir.addEventListener('click', () => aoAlterarStatus(item.id, 'Agendado'));
-      grupoAcoes.appendChild(btnReabrir);
+      botoesArea.appendChild(btnReabrir);
     }
 
-    footer.appendChild(grupoAcoes);
-    card.appendChild(footer);
+    colAcoes.appendChild(botoesArea);
+    linha.appendChild(colAcoes);
 
-    // Efeito de seleção com teclado ou mouse
-    card.addEventListener('click', () => {
-      document.querySelectorAll('.card-agendamento').forEach(c => c.classList.remove('card-selecionado'));
-      card.classList.add('card-selecionado');
+    // Seleção com foco / clique
+    linha.addEventListener('click', () => {
+      document.querySelectorAll('.linha-agendamento').forEach(c => c.classList.remove('linha-selecionada'));
+      linha.classList.add('linha-selecionada');
     });
 
-    container.appendChild(card);
+    container.appendChild(linha);
   });
 }
 
 /**
  * Renderiza o painel consolidado do fechamento do dia (US07).
+ * Design executivo, limpo e direto.
+ * 
  * @param {Array<Object>} agendamentos
  * @param {string} dataAlvo
  */
@@ -436,56 +449,55 @@ export function renderizarFechamentoDia(agendamentos, dataAlvo) {
   const fechamento = calcularFechamentoDia(agendamentos, dataAlvo);
   container.textContent = '';
 
+  // 1. Grid de Métricas Principais (KPIs discretos)
   const gridResumo = document.createElement('div');
-  gridResumo.className = 'grid-metricas';
+  gridResumo.className = 'grid-metricas-executivo';
 
-  // Card 1: Faturamento dos Concluídos
-  const cardFat = criarMetricaCard('Faturamento Concluído', `R$ ${fechamento.faturamentoConcluidos.toFixed(2)}`, 'fat-positivo');
-  // Card 2: Total Atendimentos
-  const cardTot = criarMetricaCard('Total do Dia', `${fechamento.totalAgendamentos} pets`, 'tot-geral');
-  // Card 3: Concluídos
-  const cardConcl = criarMetricaCard('Concluídos', `${fechamento.totalConcluidos}`, 'badge-concluído');
-  // Card 4: Cancelados
-  const cardCanc = criarMetricaCard('Cancelados', `${fechamento.totalCancelados}`, 'badge-cancelado');
+  gridResumo.appendChild(criarMetricaCard('Receita concluída', `R$ ${fechamento.faturamentoConcluidos.toFixed(2)}`, 'metrica-destaque'));
+  gridResumo.appendChild(criarMetricaCard('Total agendado', `${fechamento.totalAgendamentos}`, 'metrica-neutra'));
+  gridResumo.appendChild(criarMetricaCard('Concluídos', `${fechamento.totalConcluidos}`, 'metrica-concluido'));
+  gridResumo.appendChild(criarMetricaCard('Cancelados', `${fechamento.totalCancelados}`, 'metrica-cancelado'));
 
-  gridResumo.appendChild(cardFat);
-  gridResumo.appendChild(cardTot);
-  gridResumo.appendChild(cardConcl);
-  gridResumo.appendChild(cardCanc);
   container.appendChild(gridResumo);
 
-  // Breakdown por Serviço
+  // 2. Detalhamento por Serviço
   const secaoServicos = document.createElement('div');
-  secaoServicos.className = 'fechamento-servicos-lista';
+  secaoServicos.className = 'fechamento-servicos-bloco';
+
+  const cabecalhoLista = document.createElement('div');
+  cabecalhoLista.className = 'servicos-bloco-cabecalho';
 
   const tituloServicos = document.createElement('h3');
-  tituloServicos.textContent = 'Detalhamento por Serviço';
-  secaoServicos.appendChild(tituloServicos);
+  tituloServicos.textContent = 'Distribuição por serviço';
+  cabecalhoLista.appendChild(tituloServicos);
+  secaoServicos.appendChild(cabecalhoLista);
 
   const listaUl = document.createElement('ul');
-  listaUl.className = 'lista-servicos-fechamento';
+  listaUl.className = 'lista-servicos-tabela';
 
   const servicosNomes = Object.keys(fechamento.quantidadePorServico);
   if (servicosNomes.length === 0) {
     const liVazio = document.createElement('li');
-    liVazio.textContent = 'Nenhum atendimento registrado nesta data.';
+    liVazio.className = 'item-servico-vazio';
+    liVazio.textContent = 'Nenhum atendimento na data selecionada.';
     listaUl.appendChild(liVazio);
   } else {
     servicosNomes.forEach(nome => {
       const qtd = fechamento.quantidadePorServico[nome];
       const fat = fechamento.faturamentoPorServico[nome] || 0;
       const li = document.createElement('li');
+      li.className = 'linha-tabela-servico';
 
       const spanNome = document.createElement('span');
-      spanNome.className = 'fechamento-srv-nome';
+      spanNome.className = 'tb-srv-nome';
       spanNome.textContent = nome;
 
       const spanQtd = document.createElement('span');
-      spanQtd.className = 'fechamento-srv-qtd';
-      spanQtd.textContent = `${qtd}x`;
+      spanQtd.className = 'tb-srv-qtd';
+      spanQtd.textContent = `${qtd} atend.`;
 
       const spanFat = document.createElement('span');
-      spanFat.className = 'fechamento-srv-fat';
+      spanFat.className = 'tb-srv-valor';
       spanFat.textContent = `R$ ${fat.toFixed(2)}`;
 
       li.appendChild(spanNome);
@@ -499,16 +511,16 @@ export function renderizarFechamentoDia(agendamentos, dataAlvo) {
   container.appendChild(secaoServicos);
 }
 
-function criarMetricaCard(rotulo, valor, classeDestaque = '') {
+function criarMetricaCard(rotulo, valor, classeModificador = '') {
   const div = document.createElement('div');
-  div.className = `card-metrica ${classeDestaque}`;
+  div.className = `card-kpi ${classeModificador}`;
 
   const label = document.createElement('span');
-  label.className = 'metrica-label';
+  label.className = 'kpi-rotulo';
   label.textContent = rotulo;
 
   const val = document.createElement('span');
-  val.className = 'metrica-valor';
+  val.className = 'kpi-valor';
   val.textContent = valor;
 
   div.appendChild(label);
@@ -544,7 +556,7 @@ export function atualizarRelogioEProximoAtendimento(agendamentos, dataHoje) {
     const proximo = agendadosHoje.find(a => a.horario >= horaAtualString);
 
     if (!proximo) {
-      elBadgeProximo.textContent = 'Sem agendamentos pendentes hoje';
+      elBadgeProximo.textContent = 'Sem agendamentos pendentes';
       elBadgeProximo.className = 'badge-header badge-header-neutro';
     } else {
       const partesHora = proximo.horario.split(':').map(Number);
@@ -553,10 +565,10 @@ export function atualizarRelogioEProximoAtendimento(agendamentos, dataHoje) {
       const dif = minutosProximo - minutosAtuais;
 
       if (dif <= 0) {
-        elBadgeProximo.textContent = `Próximo: ${proximo.pet} (Agora! ${proximo.horario})`;
-        elBadgeProximo.className = 'badge-header badge-header-alerta';
+        elBadgeProximo.textContent = `Próximo: ${proximo.pet} (${proximo.horario})`;
+        elBadgeProximo.className = 'badge-header badge-header-atraso';
       } else {
-        elBadgeProximo.textContent = `Próximo atendimento em ${dif} min (${proximo.pet} às ${proximo.horario})`;
+        elBadgeProximo.textContent = `Próximo em ${dif} min: ${proximo.pet} (${proximo.horario})`;
         elBadgeProximo.className = dif <= 15 ? 'badge-header badge-header-alerta' : 'badge-header badge-header-ativo';
       }
     }

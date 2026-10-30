@@ -1,31 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
-  <defs>
-    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0284c7" />
-      <stop offset="100%" stop-color="#0d9488" />
-    </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.12" />
-    </filter>
-  </defs>
-
-  <!-- Simbolo com pata estilizada -->
-  <g transform="translate(10, 10)" filter="url(#shadow)">
-    <rect width="60" height="60" rx="16" fill="url(#logoGrad)" />
-    <!-- Almofadas dos dedos -->
-    <circle cx="21" cy="22" r="5" fill="#ffffff" />
-    <circle cx="30" cy="15" r="5" fill="#ffffff" />
-    <circle cx="39" cy="22" r="5" fill="#ffffff" />
-    <!-- Coxim central -->
-    <ellipse cx="30" cy="38" rx="11" ry="9.5" fill="#ffffff" />
-    <path d="M24 43 Q30 47 36 43" stroke="#0284c7" stroke-width="2" stroke-linecap="round" fill="none" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" width="240" height="48">
+  <!-- Minimalist SaaS brand icon -->
+  <g transform="translate(4, 6)">
+    <rect width="36" height="36" rx="8" fill="#1e40af" />
+    <circle cx="13" cy="14" r="2.2" fill="#ffffff" />
+    <circle cx="18" cy="11.5" r="2.2" fill="#ffffff" />
+    <circle cx="23" cy="14" r="2.2" fill="#ffffff" />
+    <path d="M13.5 19.5 C13.5 17 22.5 17 22.5 19.5 C22.5 23 18 24.5 18 24.5 C18 24.5 13.5 23 13.5 19.5 Z" fill="#ffffff" />
   </g>
-
-  <!-- Tipografia -->
-  <text x="84" y="42" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, sans-serif" font-size="28" font-weight="800" fill="#0f172a" letter-spacing="-0.5">
-    Agenda<tspan fill="#0284c7">Pet</tspan>
+  <!-- Sleek modern sans-serif typography -->
+  <text x="50" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#0f172a" letter-spacing="-0.3">
+    Agenda<tspan fill="#2563eb">Pet</tspan>
   </text>
-  <text x="86" y="60" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#64748b" letter-spacing="1.5">
-    PATINHAS &amp; CIA • PAINEL WEB
+  <text x="51" y="39" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="600" fill="#64748b" letter-spacing="1">
+    PATINHAS &amp; CIA
   </text>
 </svg>

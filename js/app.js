@@ -70,12 +70,12 @@ function inicializarTema() {
   document.documentElement.dataset.tema = temaSalvo;
   const btnTema = document.getElementById('btn-alternar-tema');
   if (btnTema) {
-    btnTema.textContent = temaSalvo === 'escuro' ? '☀️ Modo Claro' : '🌙 Modo Escuro';
+    btnTema.textContent = temaSalvo === 'escuro' ? 'Modo claro' : 'Modo escuro';
     btnTema.addEventListener('click', () => {
       const novoTema = document.documentElement.dataset.tema === 'escuro' ? 'claro' : 'escuro';
       document.documentElement.dataset.tema = novoTema;
       salvarPreferencia(CHAVES.TEMA, novoTema);
-      btnTema.textContent = novoTema === 'escuro' ? '☀️ Modo Claro' : '🌙 Modo Escuro';
+      btnTema.textContent = novoTema === 'escuro' ? 'Modo claro' : 'Modo escuro';
       exibirToast(`Tema alternado para ${novoTema}.`, 'aviso', 2000);
     });
   }
@@ -260,7 +260,7 @@ function configurarEventosFormulario() {
 
         const resultado = await consultarCepApi(v);
         if (resultado.sucesso) {
-          feedbackCep.textContent = '✓ Endereço preenchido automaticamente!';
+          feedbackCep.textContent = 'Endereço preenchido automaticamente';
           feedbackCep.className = 'feedback-campo feedback-sucesso';
 
           document.getElementById('logradouro').value = resultado.dados.logradouro;
@@ -323,7 +323,7 @@ function configurarEventosFormulario() {
         alertaFeriadoBox.hidden = false;
         alertaFeriadoBox.className = 'alerta-feriado';
         alertaFeriadoBox.setAttribute('role', 'alert');
-        alertaFeriadoBox.innerHTML = `<strong>⚠️ Atenção:</strong> A data escolhida é <strong>${resFeriado.nomeFeriado}</strong>. Confirme com o tutor antes de prosseguir.`;
+        alertaFeriadoBox.innerHTML = `<strong>Data de feriado:</strong> A data escolhida coincide com <strong>${resFeriado.nomeFeriado}</strong>. Confirme com o tutor antes de prosseguir.`;
       } else if (resFeriado.aviso) {
         alertaFeriadoBox.hidden = false;
         alertaFeriadoBox.className = 'alerta-feriado alerta-feriado-info';
@@ -527,13 +527,13 @@ function configurarLembretesETimer() {
         clearInterval(estado.timerIntervalId);
         estado.timerIntervalId = null;
         estado.lembretesAtivos = false;
-        btnPausar.textContent = '▶ Retomar Lembretes';
+        btnPausar.textContent = 'Retomar lembretes';
         btnPausar.classList.add('btn-lembretes-pausados');
         exibirToast('Lembretes periódicos pausados.', 'aviso');
       } else {
         estado.timerIntervalId = setInterval(executarCicloRelogio, 10000);
         estado.lembretesAtivos = true;
-        btnPausar.textContent = '⏸ Pausar Lembretes';
+        btnPausar.textContent = 'Pausar lembretes';
         btnPausar.classList.remove('btn-lembretes-pausados');
         executarCicloRelogio();
         exibirToast('Lembretes e relógio retomados com sucesso.', 'sucesso');
