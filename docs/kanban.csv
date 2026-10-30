@@ -1,0 +1,13 @@
+ID,Titulo,Prioridade,Pontos,Coluna,Branch,PullRequest
+US01,Estrutura semantica e acessivel da pagina,Alta,3,Concluido,feat/US01-estrutura-semantica,#1
+US02,Catalogo de servicos com fetch e tres estados,Alta,3,Concluido,feat/US02-catalogo-servicos,#2
+US03,Formulario de novo agendamento com validacao,Alta,5,Concluido,feat/US03-formulario-agendamento,#3
+US04,Endereco automatico por CEP via API publica,Media,3,Concluido,feat/US04-endereco-cep,#4
+US05,Alerta de feriados nacionais com cache de 30 dias,Media,3,Concluido,feat/US05-alerta-feriados,#5
+US06,Agenda do dia: lista dinamica busca filtros e atalhos,Alta,5,Concluido,feat/US06-agenda-dia,#6
+US07,Regras de negocio POO e fechamento do dia,Alta,5,Concluido,feat/US07-regras-fechamento,#7
+US08,Persistencia e exportacao dos dados (localStorage),Alta,3,Concluido,feat/US08-persistencia-exportacao,#8
+US09,Relogio em tempo real e lembretes de atendimento,Media,3,Concluido,feat/US09-relogio-lembretes,#9
+US10,Layout responsivo Flexbox e identidade visual,Alta,3,Concluido,feat/US10-layout-responsivo,#10
+US11,Projeto Node.js scripts CLI e ESM vs CommonJS,Alta,3,Concluido,feat/US11-scripts-node,#11
+US12,Depuracao com VS Code e relatorio de bug,Media,2,Concluido,fix/US12-depuracao-bug,#12
