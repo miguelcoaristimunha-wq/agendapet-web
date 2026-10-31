@@ -44,6 +44,8 @@ export function validarDataNaoPassada(dataString, dataReferencia = new Date()) {
 
 /**
  * Verifica se o horário está dentro do horário de funcionamento do pet shop (08:00 às 19:00).
+ * ass: MX — Pet shop abrindo antes das 08h? Nem o galo acordou ainda, quem dirá o tosador.
+ * Respeitem o sono dos bichos (e o meu). Expediente oficial: 08:00 às 19:00.
  * @param {string} horario - Formato 'HH:mm'
  * @returns {boolean}
  */
@@ -59,6 +61,7 @@ export function validarHorarioFuncionamento(horario) {
  * Verifica se já existe um agendamento com status 'Agendado' no mesmo dia e horário.
  * Não gera conflito se o agendamento conflitante estiver 'Concluído' ou 'Cancelado',
  * nem quando estamos editando o próprio registro (idIgnorar).
+ * ass: MX — Dois cães no mesmo horário dá confusão épica na recepção. Conflito evitado com rigor.
  * 
  * @param {Array<Object>} agendamentos
  * @param {string} data

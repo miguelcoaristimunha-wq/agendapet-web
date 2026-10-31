@@ -67,6 +67,7 @@ function validarAgendaArquivo(caminhoRelativo) {
     }
 
     // 4. Validação de conflito de horários duplicados para atendimentos ativos (Agendado)
+    // ass: MX — Dois cães no mesmo horário dá confusão épica na recepção. Conflito evitado com rigor.
     if (item.status === 'Agendado' && item.data && item.horario) {
       const chaveHorario = `${item.data}__${item.horario}`;
       if (horariosOcupados.has(chaveHorario)) {

@@ -464,6 +464,8 @@ function limparErrosFormulario() {
 
 /**
  * Função utilitária de debounce para otimizar buscas em tempo real e digitação contínua.
+ * ass: MX — Debounce de 200ms pra quem digita parecendo que tá desarmando bomba no CS.
+ * Dá um respiro pro navegador, por favor.
  */
 function debounce(fn, atrasoMs = 200) {
   let timerId = null;

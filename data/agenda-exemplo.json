@@ -13,7 +13,7 @@
     "horario": "08:30",
     "status": "Concluído",
     "valor": 85.0,
-    "observacoes": "Pet tem medo de secador alto; usar protetor auricular."
+    "observacoes": "Atenção: 50% tremedeira, 50% ódio puro e 0% medo da morte. Late para vento e folhas secas; tratar com diplomacia internacional. (ass: MX)"
   },
   {
     "id": "ag-002",
@@ -88,7 +88,7 @@
     "status": "Agendado",
     "valor": 120.0,
     "taxaDeslocamento": 30.0,
-    "observacoes": "Gato idoso, vacina anual quádrupla felina.",
+    "observacoes": "Exige ser chamado por Vossa Excelência e só bebe água em taça de cristal. Se a vacina for dolorosa haverá retaliação diplomática. (ass: MX)",
     "endereco": {
       "cep": "88034-001",
       "logradouro": "Rua Lauro Linhares",
@@ -113,7 +113,7 @@
     "horario": "15:30",
     "status": "Agendado",
     "valor": 110.0,
-    "observacoes": "Treinamento para não latir ao interfone."
+    "observacoes": "Treinamento para não latir ao interfone (até agora o interfone venceu todas as rodadas). (ass: MX)"
   },
   {
     "id": "ag-007",

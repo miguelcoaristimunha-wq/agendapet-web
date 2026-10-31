@@ -138,6 +138,8 @@ export class AgendamentoDomiciliar extends Agendamento {
 
   /**
    * Sobrescreve calcularValor somando a taxa de deslocamento do atendimento a domicílio.
+   * ass: MX — Taxa de deslocamento de R$ 30,00 porque a gasolina não tá de graça
+   * e transportar gato miando em Mi sustenido no banco de trás exige adicional de periculosidade.
    * @returns {number}
    */
   calcularValor() {

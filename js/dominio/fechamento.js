@@ -44,6 +44,8 @@ export function calcularFechamentoDia(agendamentos = [], dataAlvo = null, horaRe
   const pendentes = ordenadosPorHorario.filter(ag => ag.status === 'Agendado');
 
   // 5. Cálculo do faturamento dos CONCLUÍDOS com reduce (IMPORTANTE: não somar cancelados nem pendentes)
+  // ass: MX — O fiscal da Receita Federal chora de emoção quando vê esse reduce():
+  // apenas atendimentos Concluídos entram no faturamento efetivado. Cancelado aqui não passa!
   const faturamentoConcluidos = concluidos.reduce((acumulador, ag) => {
     return acumulador + ag.calcularValor();
   }, 0);

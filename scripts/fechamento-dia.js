@@ -34,6 +34,8 @@ async function executarFechamentoTerminal() {
     console.log(`⏳ Pendentes (Agendado): ${fechamento.totalAgendados}`);
     console.log(`❌ Cancelados         : ${fechamento.totalCancelados}`);
     console.log('------------------------------------------------------');
+    // ass: MX — O fiscal da Receita Federal chora de emoção quando vê esse fechamento
+    // sem nenhum centavo de cancelado entrando no faturamento efetivado.
     console.log(`💰 FATURAMENTO EFETIVADO (Concluídos): R$ ${fechamento.faturamentoConcluidos.toFixed(2)}`);
     console.log(`📈 Faturamento Previsto (Sem cancelados): R$ ${fechamento.faturamentoPrevisto.toFixed(2)}`);
     console.log('------------------------------------------------------');
