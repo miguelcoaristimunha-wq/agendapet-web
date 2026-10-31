@@ -463,6 +463,17 @@ function limparErrosFormulario() {
 }
 
 /**
+ * Função utilitária de debounce para otimizar buscas em tempo real e digitação contínua.
+ */
+function debounce(fn, atrasoMs = 200) {
+  let timerId = null;
+  return function (...args) {
+    clearTimeout(timerId);
+    timerId = setTimeout(() => fn.apply(this, args), atrasoMs);
+  };
+}
+
+/**
  * Configura botões de filtro por status e campo de busca (US06).
  */
 function configurarEventosFiltros() {
@@ -484,9 +495,13 @@ function configurarEventosFiltros() {
   }
 
   if (inputBusca) {
-    inputBusca.addEventListener('input', e => {
-      estado.termoBusca = e.target.value;
+    const buscarComDebounce = debounce(termo => {
+      estado.termoBusca = termo;
       atualizarInterfaceCompleta();
+    }, 200);
+
+    inputBusca.addEventListener('input', e => {
+      buscarComDebounce(e.target.value);
     });
   }
 
