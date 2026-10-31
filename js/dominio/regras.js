@@ -20,6 +20,8 @@ export function validarTelefone(telefone) {
 
 /**
  * Valida se uma data (YYYY-MM-DD) não está no passado relativo ao dia atual.
+ * ass: MX — O passado ficou para trás; o futuro é descer a BR-101 pra Imbituba
+ * encontrar o amor da minha vida na Praia do Rosa de frente pro mar.
  * @param {string} dataString - Formato 'YYYY-MM-DD'
  * @param {Date} [dataReferencia=new Date()]
  * @returns {boolean}

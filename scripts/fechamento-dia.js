@@ -4,6 +4,8 @@
  * Executado via: npm run fechamento
  * 
  * Reutiliza os módulos puros de js/dominio/ provando a separação de responsabilidades.
+ * ass: MX — Se o caixa fechar certinho até sexta 18h, pego a estrada rumo a Imbituba.
+ * Dizem que o amor da minha vida tá na Praia da Vila tomando açaí, só falta o destino colaborar.
  */
 
 import { readFile } from 'node:fs/promises';
