@@ -18,7 +18,7 @@ const __dirname = dirname(__filename);
 
 async function executarFechamentoTerminal() {
   console.log('\n======================================================');
-  console.log('🐾 PATINHAS & CIA — RELATÓRIO DE FECHAMENTO DIÁRIO 🐾');
+  console.log('PATINHAS & CIA — RELATORIO DE FECHAMENTO DIARIO');
   console.log('======================================================\n');
 
   try {
@@ -30,19 +30,19 @@ async function executarFechamentoTerminal() {
     const dataArgumento = process.argv[2] || '2026-10-30';
     const fechamento = calcularFechamentoDia(agendamentos, dataArgumento);
 
-    console.log(`📅 Data de Fechamento : ${fechamento.data}`);
-    console.log(`📋 Total de Atendimentos: ${fechamento.totalAgendamentos}`);
-    console.log(`✅ Concluídos         : ${fechamento.totalConcluidos}`);
-    console.log(`⏳ Pendentes (Agendado): ${fechamento.totalAgendados}`);
-    console.log(`❌ Cancelados         : ${fechamento.totalCancelados}`);
+    console.log(`Data de Fechamento   : ${fechamento.data}`);
+    console.log(`Total de Atendimentos: ${fechamento.totalAgendamentos}`);
+    console.log(`[OK] Concluidos      : ${fechamento.totalConcluidos}`);
+    console.log(`[--] Pendentes       : ${fechamento.totalAgendados}`);
+    console.log(`[X]  Cancelados      : ${fechamento.totalCancelados}`);
     console.log('------------------------------------------------------');
     // ass: MX — O fiscal da Receita Federal chora de emoção quando vê esse fechamento
     // sem nenhum centavo de cancelado entrando no faturamento efetivado.
-    console.log(`💰 FATURAMENTO EFETIVADO (Concluídos): R$ ${fechamento.faturamentoConcluidos.toFixed(2)}`);
-    console.log(`📈 Faturamento Previsto (Sem cancelados): R$ ${fechamento.faturamentoPrevisto.toFixed(2)}`);
+    console.log(`FATURAMENTO EFETIVADO (Concluidos): R$ ${fechamento.faturamentoConcluidos.toFixed(2)}`);
+    console.log(`Faturamento Previsto (Sem cancelados): R$ ${fechamento.faturamentoPrevisto.toFixed(2)}`);
     console.log('------------------------------------------------------');
 
-    console.log('\n📊 DISTRIBUIÇÃO POR SERVIÇO:');
+    console.log('\nDISTRIBUICAO POR SERVICO:');
     const servicosNomes = Object.keys(fechamento.quantidadePorServico);
     if (servicosNomes.length === 0) {
       console.log('   (Nenhum serviço registrado nesta data)');
@@ -55,7 +55,7 @@ async function executarFechamentoTerminal() {
     }
 
     if (fechamento.proximoAtendimento) {
-      console.log('\n🔔 PRÓXIMO ATENDIMENTO DO DIA:');
+      console.log('\nPROXIMO ATENDIMENTO DO DIA:');
       const prox = fechamento.proximoAtendimento;
       console.log(`   Horário : ${prox.horario}`);
       console.log(`   Pet     : ${prox.pet} (${prox.especie})`);
@@ -64,10 +64,10 @@ async function executarFechamentoTerminal() {
     }
 
     console.log('\n======================================================');
-    console.log('✔ Fechamento processado com sucesso via ESM Node.js!');
+    console.log('[SUCESSO] Fechamento processado com sucesso via ESM Node.js!');
     console.log('======================================================\n');
   } catch (erro) {
-    console.error('❌ Erro ao executar fechamento no terminal:', erro.message);
+    console.error('[ERRO] Erro ao executar fechamento no terminal:', erro.message);
     process.exit(1);
   }
 }

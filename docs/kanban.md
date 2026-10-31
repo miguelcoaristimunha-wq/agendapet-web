@@ -1,4 +1,4 @@
-# 📌 Quadro Kanban da Sprint — AgendaPet Web (Patinhas & Cia)
+# Quadro Kanban da Sprint — AgendaPet Web (Patinhas & Cia)
 
 **Período:** 16/10/2026 a 30/10/2026  
 **Responsável:** Miguel Corrêa  
@@ -8,7 +8,7 @@
 
 ---
 
-## 📋 Colunas do Quadro Kanban
+## Colunas do Quadro Kanban
 
 ```
 ┌─────────────────┐    ┌─────────────┐    ┌──────────────────┐    ┌─────────────────────────┐    ┌─────────────────┐
@@ -18,9 +18,9 @@
 
 ---
 
-## 🏆 Cartões da Sprint (Histórico de Conclusão)
+## Cartões da Sprint (Histórico de Conclusão)
 
-### ✅ Coluna: CONCLUÍDO (12/12)
+### Coluna: CONCLUÍDO (12/12)
 
 #### 1. [US01] Estrutura semântica e acessível da página
 - **Estimativa:** 3 pontos | **Prioridade:** Alta
@@ -96,14 +96,14 @@
 
 ---
 
-## 📈 Métricas da Sprint
+## Métricas da Sprint
 
 - **Total de Histórias:** 12
 - **Pontos Planejados:** 41 SP
 - **Pontos Entregues:** 41 SP
 - **Taxa de Conclusão:** 100%
 - **Bônus Implementados:**
-  - ✅ Testes unitários com `node --test` (+0,25)
-  - ✅ Download do arquivo de backup `.json` (+0,15)
-  - ✅ Folha de estilos para impressão `@media print` (+0,15)
-  - ✅ Suporte completo a Dark Mode / Light Mode
+  - [OK] Testes unitários com `node --test` (+0,25)
+  - [OK] Download do arquivo de backup `.json` (+0,15)
+  - [OK] Folha de estilos para impressão `@media print` (+0,15)
+  - [OK] Suporte completo a Dark Mode / Light Mode

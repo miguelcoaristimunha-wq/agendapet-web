@@ -1,4 +1,4 @@
-# 🐾 AgendaPet Web — Painel de Agendamentos para Pet Shop
+# AgendaPet Web — Painel de Agendamentos para Pet Shop
 
 > **Projeto Avaliativo (Avaliação M1.2 — 60% da nota) — Turma Front-End React T4**  
 > **Estudante:** Miguel Corrêa (`miguelcoaristimunha@gmail.com`)  
@@ -8,7 +8,7 @@
 
 ---
 
-## 📌 1. Sobre o Projeto: O que o sistema faz e para quem serve?
+## 1. Sobre o Projeto: O que o sistema faz e para quem serve?
 
 A **Patinhas & Cia** é um pet shop acolhedor de bairro que realizava o controle dos seus atendimentos (banho, tosa, vacinas, consultas e hospedagem) de maneira manual, usando anotações em papel e conversas soltas no WhatsApp. Essa rotina gerava três problemas graves para o negócio:
 1. Agendamentos duplicados no mesmo dia e horário;
@@ -27,7 +27,7 @@ O painel centraliza:
 
 ---
 
-## 🚀 2. Como Executar o Projeto Passo a Passo (Do Zero)
+## 2. Como Executar o Projeto Passo a Passo (Do Zero)
 
 ### Pré-requisitos
 - **Node.js:** Versão 18.0.0 ou superior (testado e homologado no Node.js v24.13.0).
@@ -80,7 +80,7 @@ npm test
 
 ---
 
-## 💼 3. Decisões de Negócio
+## 3. Decisões de Negócio
 
 Durante o refinamento com a equipe da Patinhas & Cia, estabelecemos as seguintes regras de negócio:
 
@@ -103,7 +103,7 @@ Durante o refinamento com a equipe da Patinhas & Cia, estabelecemos as seguintes
 
 ---
 
-## 🧠 4. Conceitos do Módulo 01 Aplicados no Projeto
+## 4. Conceitos do Módulo 01 Aplicados no Projeto
 
 A tabela a seguir documenta como e onde cada conceito ensinado nas 14 semanas foi aplicado no código:
 
@@ -125,7 +125,7 @@ A tabela a seguir documenta como e onde cada conceito ensinado nas 14 semanas fo
 
 ---
 
-## 🌐 5. Arquitetura Cliente-Servidor no Projeto
+## 5. Arquitetura Cliente-Servidor no Projeto
 
 Na computação web, a **arquitetura cliente-servidor** baseia-se na separação entre quem solicita recursos (**Cliente**) e quem armazena e fornece recursos (**Servidor**), comunicando-se pelo protocolo HTTP/HTTPS:
 
@@ -157,7 +157,7 @@ Na computação web, a **arquitetura cliente-servidor** baseia-se na separação
 
 ---
 
-## 📦 6. Gerenciamento de Pacotes: Instalação Global vs. Local
+## 6. Gerenciamento de Pacotes: Instalação Global vs. Local
 
 | Tipo de Instalação | O que é e Quando Usar? | Onde os arquivos ficam gravados? | Comandos Utilizados |
 | :--- | :--- | :--- | :--- |
@@ -166,7 +166,7 @@ Na computação web, a **arquitetura cliente-servidor** baseia-se na separação
 
 ---
 
-## 🔄 7. Tabela Comparativa: CommonJS (.cjs) vs. ES Modules (.mjs / .js)
+## 7. Tabela Comparativa: CommonJS (.cjs) vs. ES Modules (.mjs / .js)
 
 | Critério | CommonJS (CJS) | ES Modules (ESM) |
 | :--- | :--- | :--- |
@@ -182,7 +182,7 @@ Adotamos `"type": "module"` no `package.json` porque o ES Modules é o padrão o
 
 ---
 
-## 🎨 8. Especificidade no CSS: Conflito Real Encontrado e Solução
+## 8. Especificidade no CSS: Conflito Real Encontrado e Solução
 
 ### O Problema Encontrado:
 Durante a estilização dos botões de status dos cartões da agenda (`Concluído` e `Cancelado`), criei a classe genérica `.btn-pequeno` e depois a classe de modificação `.btn-sucesso` e `.btn-perigo`. No entanto, os botões mantinham a cor de fundo padrão neutra dos botões secundários porque em uma regra de layout anterior havia sido declarado:
@@ -215,45 +215,45 @@ Eliminei o aninhamento desnecessário `.card-agendamento .btn` transformando em 
 
 ---
 
-## 🐛 9. Depuração e Investigação de Bugs
+## 9. Depuração e Investigação de Bugs
 
 - **Resumo do Defeito:** O cálculo de fechamento somava o valor de agendamentos que já haviam sido cancelados pelos clientes.
 - **Ferramenta Utilizada:** Depurador do VS Code com configuração em `.vscode/launch.json`, breakpoints condicionais, inspeção do painel *Variables*, *Watch* e *Call Stack*.
 - **Relatório Completo:** Acesse a documentação detalhada com passo a passo de reprodução e prints em:  
-  👉 **[`docs/bug-report.md`](docs/bug-report.md)**
+  **[`docs/bug-report.md`](docs/bug-report.md)**
 
 ---
 
-## 📅 10. Resumo da Sprint e Planejamento
+## 10. Resumo da Sprint e Planejamento
 
 - **Meta da Sprint:** *"Entregar a primeira versão completa, funcional e acessível do painel web AgendaPet para a Patinhas & Cia, garantindo agendamentos sem conflitos, busca de CEP, alerta de feriados, persistência no navegador, fechamento financeiro do dia e relatórios de terminal."*
 - **Pontos Planejados:** 41 Story Points (12 histórias estimadas na sequência de Fibonacci).
 - **Pontos Entregues:** 41 Story Points (100% de entrega no prazo).
 - **O que ficou de fora e por quê?** Nenhuma história do backlog principal foi cortada. Apenas decidimos não implementar mapas interativos por geolocalização no CEP, pois a entrega do endereço formatado com logradouro e bairro já atendia plenamente a demanda da recepção.
-- **Documento Completo de Planejamento:** 👉 **[`planejamento/sprint-planning.md`](planejamento/sprint-planning.md)**
+- **Documento Completo de Planejamento:** **[`planejamento/sprint-planning.md`](planejamento/sprint-planning.md)**
 
 ---
 
-## 🔍 11. Retrospectiva da Sprint
+## 11. Retrospectiva da Sprint
 
 Ao final do ciclo de duas semanas, realizei uma reflexão crítica sobre o meu processo de trabalho como desenvolvedor front-end:
 
-### 🟢 O que Manter (Funcionou muito bem)
+### O que Manter (Funcionou muito bem)
 - **Separação rigorosa da pasta `js/dominio/`:** Deixar o domínio 100% puro (sem tocar em `document` nem `window`) foi a melhor decisão arquitetural do projeto. Isso permitiu rodar testes unitários e scripts no terminal com reutilização total de código.
 - **Uso disciplinado de Conventional Commits e Branches:** Trabalhar uma branch por história (`feat/...`, `fix/...`) facilitou a rastreabilidade e evitou conflitos de merge na `main`.
 - **Validação de acessibilidade com teclado desde o dia 1:** Testar a navegação com Tab e foco visível tornou a interface extremamente fluida para a atendente.
 
-### 🔴 O que Parar de Fazer (Pontos de atrito)
+### O que Parar de Fazer (Pontos de atrito)
 - **Tentar estilizar formulários complexos antes de fechar a validação:** No início perdi tempo ajustando espaçamentos de inputs antes de saber quais mensagens de erro apareceriam. A abordagem correta foi estruturar a validação funcional primeiro e depois polir o layout.
 - **Deixar para testar APIs de terceiros só no final da história:** Inicialmente assumi que o ViaCEP sempre responderia com logradouro preenchido, mas descobri que CEPs de cidades pequenas só retornam a cidade. Precisei adicionar tratamento para permitir edição manual.
 
-### 🟡 O que Começar a Fazer (Melhorias para as próximas sprints)
+### O que Começar a Fazer (Melhorias para as próximas sprints)
 - **Adicionar testes automatizados logo no primeiro dia (TDD ou Test-First):** Criar os testes unitários de regras de negócio antes de implementar a tela teria acelerado o desenvolvimento da função de fechamento financeiro.
 - **Automatizar linters no pré-commit com Git Hooks:** Configurar Husky para impedir commits com erros de sintaxe ou formatação fora do padrão Prettier.
 
 ---
 
-## 💻 12. Extensões do VS Code Recomendadas
+## 12. Extensões do VS Code Recomendadas
 
 1. **Live Server** (Ritwick Dey): Servidor de desenvolvimento local com recarregamento em tempo real (*Live Reload*).
 2. **ESLint** (Dirk Baeumer): Análise estática de código para identificar más práticas e variáveis não utilizadas.
@@ -262,7 +262,7 @@ Ao final do ciclo de duas semanas, realizei uma reflexão crítica sobre o meu p
 
 ---
 
-## 🤖 13. Declaração de Uso de Inteligência Artificial
+## 13. Declaração de Uso de Inteligência Artificial
 
 Em conformidade com as diretrizes de integridade e transparência da instituição de ensino:
 

@@ -15,12 +15,12 @@ const HORARIO_FECHAMENTO = '19:00';
 function validarAgendaArquivo(caminhoRelativo) {
   const caminhoAbsoluto = path.resolve(__dirname, '..', caminhoRelativo);
   console.log('\n======================================================');
-  console.log('🔍 VALIDADOR DE DADOS DA AGENDA (CommonJS / Node.js)');
-  console.log(`📁 Arquivo sob análise: ${caminhoRelativo}`);
+  console.log('VALIDADOR DE DADOS DA AGENDA (CommonJS / Node.js)');
+  console.log(`Arquivo sob analise: ${caminhoRelativo}`);
   console.log('======================================================\n');
 
   if (!fs.existsSync(caminhoAbsoluto)) {
-    console.error(`❌ ERRO: Arquivo não encontrado no caminho: ${caminhoAbsoluto}`);
+    console.error(`[ERRO] Arquivo não encontrado no caminho: ${caminhoAbsoluto}`);
     process.exit(1);
   }
 
@@ -29,12 +29,12 @@ function validarAgendaArquivo(caminhoRelativo) {
     const conteudo = fs.readFileSync(caminhoAbsoluto, 'utf-8');
     agendamentos = JSON.parse(conteudo);
   } catch (erroParse) {
-    console.error(`❌ ERRO DE PARSE: O arquivo não é um JSON válido: ${erroParse.message}`);
+    console.error(`[ERRO DE PARSE] O arquivo não é um JSON válido: ${erroParse.message}`);
     process.exit(1);
   }
 
   if (!Array.isArray(agendamentos)) {
-    console.error('❌ ERRO ESTRUTURAL: A raiz do JSON deve ser um array de agendamentos.');
+    console.error('[ERRO ESTRUTURAL] A raiz do JSON deve ser um array de agendamentos.');
     process.exit(1);
   }
 
@@ -91,12 +91,12 @@ function validarAgendaArquivo(caminhoRelativo) {
 
   // Relatório Final
   if (errosDetectados.length > 0) {
-    console.error(`\n🚨 FORAM DETECTADOS ${errosDetectados.length} ERRO(S) DE VALIDAÇÃO:\n`);
+    console.error(`\nFORAM DETECTADOS ${errosDetectados.length} ERRO(S) DE VALIDAÇÃO:\n`);
     errosDetectados.forEach((msg, i) => console.error(`  ${i + 1}. ${msg}`));
-    console.error('\n❌ Validação falhou! Corrija os dados acima para garantir a integridade da agenda.\n');
+    console.error('\n[ERRO] Validação falhou! Corrija os dados acima para garantir a integridade da agenda.\n');
     process.exit(1);
   } else {
-    console.log(`✅ SUCESSO: Todos os ${agendamentos.length} agendamentos foram validados com êxito!`);
+    console.log(`SUCESSO: Todos os ${agendamentos.length} agendamentos foram validados com êxito!`);
     console.log('   • Estrutura de campos conferida');
     console.log('   • Horários de atendimento respeitados');
     console.log('   • Nenhum conflito de horário detectado');

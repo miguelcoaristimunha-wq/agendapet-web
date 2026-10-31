@@ -1,4 +1,4 @@
-# 🎤 Roteiro Completo para Apresentação em Live Coding (Sprint Review)
+# Roteiro Completo para Apresentação em Live Coding (Sprint Review)
 
 **Duração:** 15 minutos  
 **Formato:** Compartilhamento de tela (VS Code + Navegador) no Google Meet  
@@ -7,7 +7,7 @@
 
 ---
 
-## ⏱️ Divisão do Tempo (15 Minutos)
+## Divisão do Tempo (15 Minutos)
 
 - **[00:00 - 02:00] Abertura e Contexto:** O problema da Patinhas & Cia e a meta da sprint.
 - **[02:00 - 07:00] Demonstração Prática da Aplicação no Navegador (O fluxo completo).**
@@ -18,7 +18,7 @@
 
 ---
 
-## 🎬 Passo a Passo do que Falar e Mostrar
+## Passo a Passo do que Falar e Mostrar
 
 ### 1. Abertura e Contexto (2 minutos)
 - **O que falar:**

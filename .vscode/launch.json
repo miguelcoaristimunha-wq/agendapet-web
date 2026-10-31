@@ -4,7 +4,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "🐛 Depurar Fechamento do Dia (Node.js ESM)",
+      "name": "Depurar Fechamento do Dia (Node.js ESM)",
       "program": "${workspaceFolder}/scripts/fechamento-dia.js",
       "args": ["2026-10-30"],
       "cwd": "${workspaceFolder}",
@@ -14,7 +14,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "🔍 Depurar Validador de Agenda (CommonJS)",
+      "name": "Depurar Validador de Agenda (CommonJS)",
       "program": "${workspaceFolder}/scripts/validar-agenda.cjs",
       "args": ["data/agenda-invalida.json"],
       "cwd": "${workspaceFolder}",
@@ -24,7 +24,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "🧪 Executar Testes Unitários com Debugger",
+      "name": "Executar Testes Unitarios com Debugger",
       "program": "${workspaceFolder}/node_modules/.bin/node",
       "runtimeArgs": ["--test", "tests/dominio.test.js"],
       "console": "integratedTerminal",

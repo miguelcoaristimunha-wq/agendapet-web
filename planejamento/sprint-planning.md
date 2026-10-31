@@ -1,4 +1,4 @@
-# 📋 Planejamento da Sprint — AgendaPet Web (Patinhas & Cia)
+# Planejamento da Sprint — AgendaPet Web (Patinhas & Cia)
 
 **Período da Sprint:** 16/10/2026 a 30/10/2026 (2 semanas)  
 **Desenvolvedor:** Miguel Corrêa  
@@ -7,13 +7,13 @@
 
 ---
 
-## 🎯 Meta da Sprint (Sprint Goal)
+## Meta da Sprint (Sprint Goal)
 
 > *"Entregar a primeira versão completa, funcional e acessível do painel web AgendaPet para a Patinhas & Cia, garantindo agendamentos sem conflitos, busca automática de CEP, verificação de feriados, persistência no navegador, fechamento financeiro do dia e relatórios de terminal via Node.js."*
 
 ---
 
-## 🧭 Ordem de Execução e Justificativa Técnica
+## Ordem de Execução e Justificativa Técnica
 
 Adotamos uma abordagem incremental com base na arquitetura de camadas e nas dependências de cada história:
 
@@ -30,7 +30,7 @@ Adotamos uma abordagem incremental com base na arquitetura de camadas e nas depe
 
 ---
 
-## 📊 Estimativas das Histórias de Usuário (Escala Fibonacci)
+## Estimativas das Histórias de Usuário (Escala Fibonacci)
 
 | Ticket | História de Usuário | Prioridade | Pontos (SP) | Branch de Trabalho | PR Associado |
 | :--- | :--- | :---: | :---: | :--- | :---: |
@@ -50,7 +50,7 @@ Adotamos uma abordagem incremental com base na arquitetura de camadas e nas depe
 
 ---
 
-## ⚠️ Matriz de Riscos e Planos de Mitigação
+## Matriz de Riscos e Planos de Mitigação
 
 | Risco Identificado | Probabilidade | Impacto | Estratégia de Mitigação |
 | :--- | :---: | :---: | :--- |
@@ -61,7 +61,7 @@ Adotamos uma abordagem incremental com base na arquitetura de camadas e nas depe
 
 ---
 
-## ✂️ Plano de Contingência (O que cortar se faltar tempo?)
+## Plano de Contingência (O que cortar se faltar tempo?)
 
 Caso houvesse imprevistos de cronograma, os seguintes itens bônus e secundários seriam temporariamente congelados, preservando 100% dos critérios obrigatórios da entrega:
 
@@ -72,7 +72,7 @@ Caso houvesse imprevistos de cronograma, os seguintes itens bônus e secundário
 
 ---
 
-## 🏁 Definição de Pronto (Definition of Done — DoD)
+## Definição de Pronto (Definition of Done — DoD)
 Um ticket só é considerado **"Concluído"** no Kanban após:
 1. Todos os cenários de aceite (Dado/Quando/Então) testados e aprovados;
 2. Código implementado em branch isolada com commits padronizados (Conventional Commits);
