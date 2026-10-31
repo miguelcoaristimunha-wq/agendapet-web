@@ -1526,7 +1526,7 @@ body {
   .skip-link,
   .toast-container,
   .modal-backdrop {
-    display: none !important;
+    display: none;
   }
 
   .conteudo-principal {
