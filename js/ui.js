@@ -1,10 +1,3 @@
-/**
- * js/ui.js
- * Gerenciador de interface do usuário, manipulação segura do DOM, eventos e renderização.
- * Design minimalista e profissional estilo SaaS (sem emojis decorativos, sem poluição visual).
- * Conforme US06: Dados do usuário são SEMPRE inseridos com textContent (proteção contra XSS).
- */
-
 import { verificarConflitoHorario, filtrarAgendamentos } from './dominio/regras.js';
 import { criarAgendamento } from './dominio/agendamento.js';
 import { calcularFechamentoDia } from './dominio/fechamento.js';
@@ -208,7 +201,7 @@ export function renderizarCarregandoCatalogo() {
 }
 
 /**
- * Renderiza a lista de agendamentos no painel da US06.
+ * Renderiza a lista de agendamentos no painel.
  * Design minimalista e profissional: visual tipo tabela/lista moderna, sem poluição.
  * 
  * @param {Array<Object>} agendamentos
@@ -225,18 +218,18 @@ export function renderizarListaAgendamentos(agendamentos, { termoBusca = '', fil
   if (!container) return;
   container.textContent = '';
 
-  // 1. Filtragem por data
+  
   let filtrados = agendamentos;
   if (dataSelecionada) {
     filtrados = filtrados.filter(item => item.data === dataSelecionada);
   }
 
-  // 2. Filtragem por status com callback (US07)
+  
   if (filtroStatus !== 'Todos') {
     filtrados = filtrarAgendamentos(filtrados, item => item.status === filtroStatus);
   }
 
-  // 3. Busca em tempo real
+  
   if (termoBusca && termoBusca.trim() !== '') {
     const termo = termoBusca.trim().toLowerCase();
     filtrados = filtrados.filter(item => {
@@ -247,16 +240,16 @@ export function renderizarListaAgendamentos(agendamentos, { termoBusca = '', fil
     });
   }
 
-  // 4. Ordenação cronológica por horário
+  
   filtrados.sort((a, b) => (a.horario || '').localeCompare(b.horario || ''));
 
-  // 5. Atualiza contador acessível
+  
   if (contador) {
     const plural = filtrados.length === 1 ? 'agendamento' : 'agendamentos';
     contador.textContent = `${filtrados.length} ${plural}`;
   }
 
-  // 6. Estado de lista vazia sóbrio
+  
   if (filtrados.length === 0) {
     const cardVazio = document.createElement('div');
     cardVazio.className = 'card-vazio';
@@ -278,7 +271,7 @@ export function renderizarListaAgendamentos(agendamentos, { termoBusca = '', fil
     return;
   }
 
-  // 7. Renderização dos itens da agenda (Design refinado e legível)
+  
   const agora = new Date();
   const horaAtualString = `${String(agora.getHours()).padStart(2, '0')}:${String(agora.getMinutes()).padStart(2, '0')}`;
   const dataHojeString = agora.toISOString().slice(0, 10);
@@ -436,7 +429,7 @@ export function renderizarListaAgendamentos(agendamentos, { termoBusca = '', fil
 }
 
 /**
- * Renderiza o painel consolidado do fechamento do dia (US07).
+ * Renderiza o painel consolidado do fechamento do dia.
  * Design executivo, limpo e direto.
  * 
  * @param {Array<Object>} agendamentos
@@ -449,7 +442,7 @@ export function renderizarFechamentoDia(agendamentos, dataAlvo) {
   const fechamento = calcularFechamentoDia(agendamentos, dataAlvo);
   container.textContent = '';
 
-  // 1. Grid de Métricas Principais (KPIs discretos)
+  
   const gridResumo = document.createElement('div');
   gridResumo.className = 'grid-metricas-executivo';
 
@@ -460,7 +453,7 @@ export function renderizarFechamentoDia(agendamentos, dataAlvo) {
 
   container.appendChild(gridResumo);
 
-  // 2. Detalhamento por Serviço
+  
   const secaoServicos = document.createElement('div');
   secaoServicos.className = 'fechamento-servicos-bloco';
 
@@ -529,7 +522,7 @@ function criarMetricaCard(rotulo, valor, classeModificador = '') {
 }
 
 /**
- * Atualiza o relógio digital no cabeçalho e calcula o tempo até o próximo atendimento (US09).
+ * Atualiza o relógio digital no cabeçalho e calcula o tempo até o próximo atendimento.
  * @param {Array<Object>} agendamentos
  * @param {string} dataHoje
  */
@@ -576,7 +569,7 @@ export function atualizarRelogioEProximoAtendimento(agendamentos, dataHoje) {
 }
 
 /**
- * Abre modal com JSON exportado formatado para cópia e download (US08).
+ * Abre modal com JSON exportado formatado para cópia e download.
  * @param {Array<Object>} agendamentos
  */
 export function abrirModalExportacao(agendamentos) {

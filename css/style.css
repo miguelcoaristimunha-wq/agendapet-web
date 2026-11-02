@@ -1,21 +1,12 @@
-/* ==========================================================================
-   css/style.css — AgendaPet Web (Patinhas & Cia)
-   Design System Profissional • Estilo SaaS Minimalista • Mobile-First
-   Sem !important • Sem seletores de ID • Foco em tipografia e legibilidade
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   1. Variáveis Globais (Tema Claro — Padrão)
-   -------------------------------------------------------------------------- */
 :root {
-  /* Identidade Visual — Azul Sóbrio e Neutros */
+  
   --cor-primaria: #1e40af;
   --cor-primaria-hover: #1d4ed8;
   --cor-primaria-suave: #eff6ff;
   --cor-primaria-borda: #dbeafe;
   --cor-primaria-foco: rgba(30, 64, 175, 0.15);
 
-  /* Estados e Ações */
+  
   --cor-sucesso: #15803d;
   --cor-sucesso-bg: #f0fdf4;
   --cor-sucesso-borda: #bbf7d0;
@@ -28,7 +19,7 @@
   --cor-alerta-bg: #fffbeb;
   --cor-alerta-borda: #fde68a;
 
-  /* Superfícies e Linhas */
+  
   --cor-fundo-pagina: #f8fafc;
   --cor-fundo-card: #ffffff;
   --cor-fundo-input: #ffffff;
@@ -37,13 +28,13 @@
   --cor-borda-sutil: #f1f5f9;
   --cor-borda-foco: #2563eb;
 
-  /* Tipografia */
+  
   --cor-texto-principal: #0f172a;
   --cor-texto-secundario: #475569;
   --cor-texto-mutado: #64748b;
   --cor-texto-claro: #94a3b8;
 
-  /* Sombras e Raios Discretos (Sem exagero) */
+  
   --sombra-card: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
   --sombra-dialog: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
 
@@ -52,7 +43,7 @@
   --raio-lg: 12px;
   --raio-pill: 9999px;
 
-  /* Espaçamentos Consistentes */
+  
   --espaco-2xs: 2px;
   --espaco-xs: 4px;
   --espaco-sm: 8px;
@@ -65,9 +56,6 @@
   --fonte-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-/* --------------------------------------------------------------------------
-   Tema Escuro (Dark Mode Sóbrio)
-   -------------------------------------------------------------------------- */
 [data-tema="escuro"] {
   --cor-primaria: #3b82f6;
   --cor-primaria-hover: #60a5fa;
@@ -104,9 +92,6 @@
   --sombra-dialog: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
 }
 
-/* --------------------------------------------------------------------------
-   2. Reset e Acessibilidade Básica
-   -------------------------------------------------------------------------- */
 *,
 *::before,
 *::after {
@@ -134,7 +119,6 @@ body {
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-/* Ocultação Segura sem !important (vence qualquer classe por especificidade de atributo) */
 [hidden],
 .toast-container[hidden],
 .modal-backdrop[hidden],
@@ -182,9 +166,6 @@ body {
   border-width: 0;
 }
 
-/* --------------------------------------------------------------------------
-   3. Cabeçalho Superior e Navegação (Discreto e Funcional)
-   -------------------------------------------------------------------------- */
 .cabecalho-principal {
   background-color: var(--cor-fundo-card);
   border-bottom: 1px solid var(--cor-borda);
@@ -293,7 +274,6 @@ body {
   background-color: var(--cor-perigo-bg);
 }
 
-/* Sub-navegação em Abas Discretas */
 .navegacao-secoes {
   border-top: 1px solid var(--cor-borda-sutil);
   background-color: var(--cor-fundo-card);
@@ -348,9 +328,6 @@ body {
   padding: 0 4px;
 }
 
-/* --------------------------------------------------------------------------
-   4. Estrutura Principal do Painel
-   -------------------------------------------------------------------------- */
 .conteudo-principal {
   flex: 1;
   max-width: 1400px;
@@ -407,9 +384,6 @@ body {
   border-radius: var(--raio-pill);
 }
 
-/* --------------------------------------------------------------------------
-   5. Catálogo de Serviços (Drawer Limpo e Minimalista)
-   -------------------------------------------------------------------------- */
 .catalogo-detalhes {
   margin-bottom: var(--espaco-md);
   border: 1px solid var(--cor-borda);
@@ -570,9 +544,6 @@ body {
   gap: var(--espaco-md);
 }
 
-/* --------------------------------------------------------------------------
-   6. Formulário de Novo Agendamento (Compacto e Bem Alinhado)
-   -------------------------------------------------------------------------- */
 .formulario-agendamento {
   display: flex;
   flex-direction: column;
@@ -641,7 +612,6 @@ body {
   margin-top: 1px;
 }
 
-/* Bloco Domicílio — Flat Inset sem tracejados chamativos */
 .bloco-domicilio {
   background-color: var(--cor-fundo-pagina);
   border: 1px solid var(--cor-borda);
@@ -714,9 +684,6 @@ body {
   margin-top: 4px;
 }
 
-/* --------------------------------------------------------------------------
-   7. Botões e Controles Gerais (Discretos e Funcionais)
-   -------------------------------------------------------------------------- */
 .btn {
   height: 34px;
   padding: 0 14px;
@@ -773,9 +740,6 @@ body {
   border-color: var(--cor-perigo-borda);
 }
 
-/* --------------------------------------------------------------------------
-   8. Barra de Filtros e Segmented Control (Estilo Linear / macOS)
-   -------------------------------------------------------------------------- */
 .barra-filtros {
   display: flex;
   flex-direction: column;
@@ -866,7 +830,6 @@ body {
   border-color: var(--cor-borda-foco);
 }
 
-/* Segmented Control estilo Apple */
 .grupo-botoes-status {
   display: inline-flex;
   background-color: var(--cor-fundo-pagina);
@@ -899,9 +862,6 @@ body {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-/* --------------------------------------------------------------------------
-   9. Linhas da Agenda (Visual Limpo e Escaneável)
-   -------------------------------------------------------------------------- */
 .lista-agendamentos-cards {
   display: flex;
   flex-direction: column;
@@ -1111,9 +1071,6 @@ body {
   margin-top: 4px;
 }
 
-/* --------------------------------------------------------------------------
-   10. Fechamento de Caixa e Métricas
-   -------------------------------------------------------------------------- */
 .secao-cabecalho-fechamento {
   display: flex;
   justify-content: space-between;
@@ -1220,9 +1177,6 @@ body {
   color: var(--cor-texto-mutado);
 }
 
-/* --------------------------------------------------------------------------
-   11. Barra de Informações Rápidas e Rodapé
-   -------------------------------------------------------------------------- */
 .barra-dicas {
   border-top: 1px solid var(--cor-borda);
   background-color: var(--cor-fundo-card);
@@ -1278,9 +1232,6 @@ body {
   color: var(--cor-texto-claro);
 }
 
-/* --------------------------------------------------------------------------
-   12. Toast Minimalista e Modal Executivo
-   -------------------------------------------------------------------------- */
 .toast-container {
   position: fixed;
   bottom: 20px;
@@ -1386,9 +1337,6 @@ body {
   gap: 8px;
 }
 
-/* --------------------------------------------------------------------------
-   13. Responsividade — Media Queries (Mobile-First)
-   -------------------------------------------------------------------------- */
 @media (min-width: 768px) {
   .linha-form {
     flex-direction: row;
@@ -1538,9 +1486,6 @@ body {
   background: transparent;
 }
 
-/* --------------------------------------------------------------------------
-   14. Estilos de Impressão (@media print)
-   -------------------------------------------------------------------------- */
 @media print {
   body {
     background: #ffffff;

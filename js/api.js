@@ -1,9 +1,3 @@
-/**
- * js/api.js
- * Camada de integração externa e consumo de APIs públicas com fetch e async/await.
- * Gerencia cache de feriados (30 dias) e tratamento robusto de erros.
- */
-
 const CACHE_FERIADOS_PREFIX = 'agendapet:cache_feriados_';
 const VALIDADE_CACHE_DIAS = 30;
 
@@ -98,7 +92,7 @@ export async function consultarCepApi(cep) {
 export async function consultarFeriadosAno(ano) {
   const chaveCache = `${CACHE_FERIADOS_PREFIX}${ano}`;
 
-  // 1. Tenta recuperar do cache local com validação de TTL
+  
   try {
     const itemEmCache = localStorage.getItem(chaveCache);
     if (itemEmCache) {
@@ -117,7 +111,7 @@ export async function consultarFeriadosAno(ano) {
     console.warn('Erro ao ler cache de feriados:', e);
   }
 
-  // 2. Requisição para a BrasilAPI
+  
   try {
     const resposta = await fetch(`https://brasilapi.com.br/api/feriados/v1/${ano}`);
     if (!resposta.ok) {
@@ -126,7 +120,7 @@ export async function consultarFeriadosAno(ano) {
 
     const feriados = await resposta.json();
 
-    // 3. Salva no cache com data da consulta
+    
     try {
       localStorage.setItem(
         chaveCache,

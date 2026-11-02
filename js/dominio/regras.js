@@ -1,16 +1,8 @@
-/**
- * js/dominio/regras.js
- * Regras de negócio puras: validações, conflitos de horário e callbacks de filtragem.
- * ATENÇÃO: Sem DOM nem dependências externas para rodar no navegador e no Node.js.
- */
-
 export const HORARIO_ABERTURA = '08:00';
 export const HORARIO_FECHAMENTO = '19:00';
 
 /**
- * Verifica se um telefone é válido (formato brasileiro com DDD: 10 ou 11 dígitos).
- * @param {string} telefone
- * @returns {boolean}
+ * Valida formato de telefone com DDD (10 ou 11 digitos).
  */
 export function validarTelefone(telefone) {
   if (!telefone || typeof telefone !== 'string') return false;
@@ -19,12 +11,7 @@ export function validarTelefone(telefone) {
 }
 
 /**
- * Valida se uma data (YYYY-MM-DD) não está no passado relativo ao dia atual.
- * ass: MX — O passado ficou para trás; o futuro é descer a BR-101 pra Imbituba
- * encontrar o amor da minha vida na Praia do Rosa de frente pro mar.
- * @param {string} dataString - Formato 'YYYY-MM-DD'
- * @param {Date} [dataReferencia=new Date()]
- * @returns {boolean}
+ * Valida se a data selecionada nao pertence ao passado.
  */
 export function validarDataNaoPassada(dataString, dataReferencia = new Date()) {
   if (!dataString || typeof dataString !== 'string') return false;
@@ -34,7 +21,6 @@ export function validarDataNaoPassada(dataString, dataReferencia = new Date()) {
   const [ano, mes, dia] = partes;
   const dataAlvo = new Date(ano, mes - 1, dia);
 
-  // Zera horário para comparar apenas a data do calendário
   const hoje = new Date(
     dataReferencia.getFullYear(),
     dataReferencia.getMonth(),
@@ -45,11 +31,7 @@ export function validarDataNaoPassada(dataString, dataReferencia = new Date()) {
 }
 
 /**
- * Verifica se o horário está dentro do horário de funcionamento do pet shop (08:00 às 19:00).
- * ass: MX — Pet shop abrindo antes das 08h? Nem o galo acordou ainda, quem dirá o tosador.
- * Respeitem o sono dos bichos (e o meu). Expediente oficial: 08:00 às 19:00.
- * @param {string} horario - Formato 'HH:mm'
- * @returns {boolean}
+ * Verifica se o horario esta dentro do expediente (08:00 as 19:00).
  */
 export function validarHorarioFuncionamento(horario) {
   if (!horario || typeof horario !== 'string') return false;
@@ -60,35 +42,20 @@ export function validarHorarioFuncionamento(horario) {
 }
 
 /**
- * Verifica se já existe um agendamento com status 'Agendado' no mesmo dia e horário.
- * Não gera conflito se o agendamento conflitante estiver 'Concluído' ou 'Cancelado',
- * nem quando estamos editando o próprio registro (idIgnorar).
- * ass: MX — Dois cães no mesmo horário dá confusão épica na recepção. Conflito evitado com rigor.
- * 
- * @param {Array<Object>} agendamentos
- * @param {string} data
- * @param {string} horario
- * @param {string|null} [idIgnorar=null]
- * @returns {boolean} True se houver conflito ativo, False caso contrário
+ * Detecta conflito de horario entre agendamentos ativos.
  */
 export function verificarConflitoHorario(agendamentos, data, horario, idIgnorar = null) {
   if (!Array.isArray(agendamentos)) return false;
 
   return agendamentos.some(item => {
     if (idIgnorar && item.id === idIgnorar) return false;
-    // Conflito só ocorre se o agendamento estiver com status 'Agendado'
     const statusAtivo = item.status === 'Agendado';
     return statusAtivo && item.data === data && item.horario === horario;
   });
 }
 
 /**
- * Função de alta ordem (Higher-Order Function) que recebe um callback personalizado
- * como critério de filtragem, satisfazendo o requisito da US07.
- * 
- * @param {Array<Object>} lista
- * @param {(item: Object, index: number, array: Array) => boolean} criterioCallback
- * @returns {Array<Object>}
+ * Funcao de alta ordem para filtragem flexivel por predicado.
  */
 export function filtrarAgendamentos(lista, criterioCallback) {
   if (!Array.isArray(lista)) return [];

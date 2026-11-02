@@ -23,17 +23,12 @@
   </script>
 </head>
 <body>
-  <!-- Link de acessibilidade para navegação rápida por teclado (US01) -->
   <a href="#main-content" class="skip-link">Ir para o conteúdo principal</a>
-
-  <!-- Cabeçalho Principal (Landmark: header) -->
   <header class="cabecalho-principal">
     <div class="container-cabecalho">
       <div class="marca-area">
         <img src="img/logo.svg" alt="Patinhas &amp; Cia — AgendaPet" class="logo-svg" width="180" height="36">
       </div>
-
-      <!-- Relógio e Indicador de Próximo Atendimento (US09) -->
       <div class="painel-tempo-real" aria-live="polite">
         <time id="relogio-digital" class="relogio-digital" aria-label="Horário atual">--:--:--</time>
         <span class="divisor-header" aria-hidden="true">•</span>
@@ -41,8 +36,6 @@
           Carregando atendimentos...
         </div>
       </div>
-
-      <!-- Controles de Acessibilidade e Interface -->
       <div class="controles-topo">
         <button type="button" id="btn-pausar-lembretes" class="btn btn-ghost" aria-label="Pausar ou retomar lembretes automáticos">
           Pausar lembretes
@@ -52,8 +45,6 @@
         </button>
       </div>
     </div>
-
-    <!-- Navegação semântica em abas discretas (Landmark: nav) -->
     <nav class="navegacao-secoes" aria-label="Navegação rápida entre as seções do painel">
       <div class="container-nav">
         <ul>
@@ -64,36 +55,23 @@
       </div>
     </nav>
   </header>
-
-  <!-- Container de Notificação Flutuante (Toast acessível) -->
   <div id="toast-container" class="toast-container" role="status" aria-live="polite" hidden></div>
-
-  <!-- Conteúdo Principal (Landmark: main) -->
   <main id="main-content" class="conteudo-principal">
     <h1 class="titulo-pagina-oculto">AgendaPet Web — Painel de Operações da Patinhas &amp; Cia</h1>
-
-    <!-- LAYOUT DO DASHBOARD -->
     <div class="layout-grid-dashboard">
-      
-      <!-- SEÇÃO 1: NOVO AGENDAMENTO (US03, US04, US05) -->
       <section id="sec-novo" class="painel-secao painel-formulario" aria-labelledby="titulo-novo-agendamento">
         <header class="secao-cabecalho">
           <h2 id="titulo-novo-agendamento">Novo agendamento</h2>
           <p class="secao-subtitulo">Cadastre um atendimento com validação imediata e checagem de horários.</p>
         </header>
-
-        <!-- Catálogo de Serviços Expansível (US02) -->
         <details class="catalogo-detalhes">
           <summary class="catalogo-resumo">
             <span class="catalogo-resumo-titulo">Tabela de serviços e valores</span>
             <span class="catalogo-dica">Ver catálogo</span>
           </summary>
           <div id="catalogo-servicos-container" class="catalogo-grid" aria-live="polite">
-            <!-- Inserido dinamicamente via JS -->
           </div>
         </details>
-
-        <!-- Formulário de Agendamento -->
         <form id="form-agendamento" class="formulario-agendamento" novalidate>
           
           <div class="linha-form">
@@ -152,11 +130,7 @@
               <span id="erro-horario" class="msg-erro-campo" role="alert" hidden></span>
             </div>
           </div>
-
-          <!-- Alerta dinâmico de Feriado Nacional (US05) -->
           <div id="alerta-feriado-box" class="alerta-feriado" role="alert" hidden></div>
-
-          <!-- Opção de Atendimento Domiciliar (US04 / US07) -->
           <div class="bloco-domicilio">
             <label class="checkbox-container">
               <input type="checkbox" id="check-domicilio" name="check-domicilio">
@@ -165,8 +139,6 @@
             <p id="aviso-domicilio-indisponivel" class="texto-dica-aviso" hidden>
               O serviço selecionado é exclusivo para atendimento na clínica física.
             </p>
-
-            <!-- Container expansível de Endereço via CEP (US04) -->
             <div id="container-endereco" class="container-endereco-expansivel" hidden>
               <div class="grupo-campo">
                 <label for="cep">CEP <span class="obrigatorio">*</span></label>
@@ -229,8 +201,6 @@
           </div>
         </form>
       </section>
-
-      <!-- SEÇÃO 2: AGENDA DO DIA (US06, US09) -->
       <section id="sec-agenda" class="painel-secao painel-agenda" aria-labelledby="titulo-agenda-dia">
         <header class="secao-cabecalho">
           <div class="titulo-com-contador">
@@ -239,8 +209,6 @@
           </div>
           <p class="secao-subtitulo">Acompanhe atendimentos, busque por cliente e altere status.</p>
         </header>
-
-        <!-- Barra de Ferramentas: Busca, Data e Segmented Controls -->
         <div class="barra-filtros">
           <div class="campo-busca-wrapper">
             <label for="campo-busca" class="visually-hidden">Buscar por tutor, pet ou protocolo</label>
@@ -263,14 +231,9 @@
             </div>
           </div>
         </div>
-
-        <!-- Lista dinâmica dos agendamentos -->
         <div id="lista-agendamentos" class="lista-agendamentos-cards" aria-live="polite" role="region" aria-label="Lista de agendamentos">
-          <!-- Inserido via JS -->
         </div>
       </section>
-
-      <!-- SEÇÃO 3: FECHAMENTO DO DIA E CAIXA (US07, US08) -->
       <section id="sec-fechamento" class="painel-secao painel-fechamento" aria-labelledby="titulo-fechamento">
         <header class="secao-cabecalho secao-cabecalho-fechamento">
           <div>
@@ -287,17 +250,12 @@
             </button>
           </div>
         </header>
-
-        <!-- Conteúdo consolidado do fechamento -->
         <div id="conteudo-fechamento" class="conteudo-fechamento-resumo" aria-live="polite">
-          <!-- Inserido dinamicamente via JS -->
         </div>
       </section>
 
     </div>
   </main>
-
-  <!-- Barra de Informações Rápidas e Atalhos (Landmark: aside) -->
   <aside class="barra-dicas" aria-label="Orientações e atalhos rápidos">
     <div class="container-dicas">
       <div class="item-dica">
@@ -316,8 +274,6 @@
       </div>
     </div>
   </aside>
-
-  <!-- Rodapé Institucional (Landmark: footer) -->
   <footer class="rodape-principal">
     <div class="container-rodape">
       <div class="rodape-autor">
@@ -329,8 +285,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- Modal de Exportação JSON (US08 / US11) -->
   <div id="modal-exportacao" class="modal-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="titulo-modal-exportacao">
     <div class="modal-conteudo">
       <div class="modal-header">
@@ -347,8 +301,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Ponto de entrada JavaScript usando ES Modules (US11) -->
   <script type="module" src="js/app.js"></script>
 </body>
 </html>

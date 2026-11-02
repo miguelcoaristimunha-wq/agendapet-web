@@ -1,9 +1,3 @@
-/**
- * js/app.js
- * Ponto de entrada da aplicação web no navegador (ES Modules).
- * Orquestra eventos, ciclo de vida, persistência e integrações.
- */
-
 import { carregarServicosApi, consultarCepApi, verificarSeDataEFeriado } from './api.js';
 import {
   salvarAgendaStorage,
@@ -122,7 +116,7 @@ function ajustarFiltroDataInicial() {
 }
 
 /**
- * Carrega o catálogo de serviços tratando os 3 estados (US02).
+ * Carrega o catálogo de serviços tratando os 3 estados.
  */
 async function carregarCatalogo() {
   renderizarCarregandoCatalogo();
@@ -136,7 +130,7 @@ async function carregarCatalogo() {
 }
 
 /**
- * Carrega a agenda do localStorage ou inicializa com a carga inicial de apoio (US08 / US11).
+ * Carrega a agenda do localStorage ou inicializa com a carga inicial de apoio.
  */
 async function inicializarBaseDeDados() {
   const agendaSalva = carregarAgendaStorage();
@@ -190,7 +184,7 @@ function atualizarInterfaceCompleta() {
 }
 
 /**
- * Altera o status de um agendamento e persiste (US06 / US08).
+ * Altera o status de um agendamento e persiste.
  */
 function alterarStatusAgendamento(id, novoStatus) {
   const index = estado.agendamentos.findIndex(ag => ag.id === id);
@@ -203,7 +197,7 @@ function alterarStatusAgendamento(id, novoStatus) {
 }
 
 /**
- * Configura atalhos globais de teclado (US06).
+ * Configura atalhos globais de teclado.
  * 'N' -> Foca no form de novo agendamento
  * '/' -> Foca no campo de busca da agenda
  * 'Esc' -> Limpa a busca
@@ -239,7 +233,7 @@ function configurarEventosTeclado() {
 }
 
 /**
- * Configura formulário de novo agendamento, máscaras, CEP e alertas (US03, US04, US05).
+ * Configura formulário de novo agendamento, máscaras, CEP e alertas.
  */
 function configurarEventosFormulario() {
   const form = document.getElementById('form-agendamento');
@@ -269,7 +263,7 @@ function configurarEventosFormulario() {
     });
   }
 
-  // Máscara e consulta automática de CEP (US04)
+  // Máscara e consulta automática de CEP
   if (inputCep) {
     inputCep.addEventListener('input', async e => {
       let v = e.target.value.replace(/\D/g, '');
@@ -330,7 +324,7 @@ function configurarEventosFormulario() {
     });
   }
 
-  // Alerta de Feriado na escolha da data (US05)
+  // Alerta de Feriado na escolha da data
   if (inputData && alertaFeriadoBox) {
     inputData.addEventListener('change', async () => {
       alertaFeriadoBox.hidden = true;
@@ -354,7 +348,7 @@ function configurarEventosFormulario() {
     });
   }
 
-  // Submissão do Formulário de Agendamento (US03)
+  // Submissão do Formulário de Agendamento
   if (form) {
     form.addEventListener('submit', async evento => {
       evento.preventDefault();
@@ -388,7 +382,7 @@ function configurarEventosFormulario() {
         } : null
       };
 
-      // 1. Validação de regras de negócio
+      
       const resultadoValidacao = validarDadosAgendamento(dados, estado.agendamentos);
 
       if (!resultadoValidacao.valido) {
@@ -396,7 +390,7 @@ function configurarEventosFormulario() {
         return;
       }
 
-      // 2. Confirmação de feriado (US05)
+      
       const resFeriado = await verificarSeDataEFeriado(dados.data);
       if (resFeriado.ehFeriado && estado.feriadoConfirmadoParaData !== dados.data) {
         const confirmar = window.confirm(
@@ -409,7 +403,7 @@ function configurarEventosFormulario() {
         estado.feriadoConfirmadoParaData = dados.data;
       }
 
-      // 3. Criação do protocolo sequencial via closure
+      
       const protocolo = estado.geradorProtocolo();
       const id = `ag-${Date.now()}`;
 
@@ -420,11 +414,11 @@ function configurarEventosFormulario() {
         status: 'Agendado'
       });
 
-      // 4. Salva no estado e localStorage
+      
       estado.agendamentos.push(novoAgendamentoInstancia.toJSON());
       salvarAgendaStorage(estado.agendamentos);
 
-      // 5. Atualiza interface e exibe feedback
+      
       form.reset();
       if (containerEndereco) containerEndereco.hidden = true;
       if (feedbackCep) feedbackCep.textContent = '';
@@ -438,7 +432,7 @@ function configurarEventosFormulario() {
 }
 
 /**
- * Exibe erros nos campos correspondentes e move o foco para o primeiro inválido (US03).
+ * Exibe erros nos campos correspondentes e move o foco para o primeiro inválido.
  */
 function exibirErrosFormulario(erros) {
   let primeiroElementoInvalido = null;
@@ -486,7 +480,7 @@ function limparErrosFormulario() {
 
 /**
  * Função utilitária de debounce para otimizar buscas em tempo real e digitação contínua.
- * ass: MX — Debounce de 200ms pra quem digita parecendo que tá desarmando bomba no CS.
+ 
  * Dá um respiro pro navegador, por favor.
  */
 function debounce(fn, atrasoMs = 200) {
@@ -498,7 +492,7 @@ function debounce(fn, atrasoMs = 200) {
 }
 
 /**
- * Configura botões de filtro por status e campo de busca (US06).
+ * Configura botões de filtro por status e campo de busca.
  */
 function configurarEventosFiltros() {
   const containerFiltros = document.getElementById('botoes-filtro-status');
@@ -555,7 +549,7 @@ function marcarBotaoFiltroAtivo(status) {
 }
 
 /**
- * Configura timers de relógio e lembrete com opção de pausar e retomar (US09).
+ * Configura timers de relógio e lembrete com opção de pausar e retomar.
  */
 function configurarLembretesETimer() {
   const btnPausar = document.getElementById('btn-pausar-lembretes');
@@ -592,7 +586,7 @@ function configurarLembretesETimer() {
 }
 
 /**
- * Configura botões do modal de exportação e limpeza seletiva (US08).
+ * Configura botões do modal de exportação e limpeza seletiva.
  */
 function configurarEventosExportacao() {
   const btnExportar = document.getElementById('btn-exportar-agenda');

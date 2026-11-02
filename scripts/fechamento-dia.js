@@ -4,7 +4,7 @@
  * Executado via: npm run fechamento
  * 
  * Reutiliza os módulos puros de js/dominio/ provando a separação de responsabilidades.
- * ass: MX — Se o caixa fechar certinho até sexta 18h, pego a estrada rumo a Imbituba.
+ 
  * Dizem que o amor da minha vida tá na Praia da Vila tomando açaí, só falta o destino colaborar.
  */
 
@@ -36,7 +36,7 @@ async function executarFechamentoTerminal() {
     console.log(`[--] Pendentes       : ${fechamento.totalAgendados}`);
     console.log(`[X]  Cancelados      : ${fechamento.totalCancelados}`);
     console.log('------------------------------------------------------');
-    // ass: MX — O fiscal da Receita Federal chora de emoção quando vê esse fechamento
+    
     // sem nenhum centavo de cancelado entrando no faturamento efetivado.
     console.log(`FATURAMENTO EFETIVADO (Concluidos): R$ ${fechamento.faturamentoConcluidos.toFixed(2)}`);
     console.log(`Faturamento Previsto (Sem cancelados): R$ ${fechamento.faturamentoPrevisto.toFixed(2)}`);

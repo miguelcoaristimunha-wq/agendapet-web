@@ -1,10 +1,3 @@
-/**
- * js/storage.js
- * Módulo de persistência local centralizada em localStorage.
- * Todas as chaves utilizam o prefixo 'agendapet:' para isolamento.
- * Implementa try/catch contra dados corrompidos e limpeza seletiva.
- */
-
 const PREFIXO = 'agendapet:';
 
 export const CHAVES = {
@@ -105,7 +98,7 @@ export function limparDadosProjeto() {
 
 /**
  * Gera uma string formatada em JSON com indentação legível para exportação,
- * compatível com o formato lido pelos scripts Node.js da US11.
+ * compatível com o formato lido pelos scripts Node.js .
  * @param {Array<Object>} agendamentos
  * @returns {string}
  */

@@ -3,7 +3,7 @@
  * Script CLI em CommonJS (require / process.exit) para validação estrita de dados.
  * Executado via: npm run validar
  * 
- * Atende ao requisito da US11: CommonJS com fs e path, terminando com process.exit(1) em caso de erro.
+ * CommonJS com fs e path, terminando com process.exit(1) em caso de erro.
  */
 
 const fs = require('fs');
@@ -44,7 +44,7 @@ function validarAgendaArquivo(caminhoRelativo) {
   agendamentos.forEach((item, index) => {
     const prefixo = `[Item #${index + 1} | Protocolo: ${item.protocolo || 'SEM PROTOCOLO'}]`;
 
-    // 1. Campos obrigatórios essenciais
+    
     const camposObrigatorios = ['protocolo', 'tutor', 'telefone', 'pet', 'especie', 'servicoId', 'data', 'horario', 'status'];
     camposObrigatorios.forEach(campo => {
       if (!item[campo] || String(item[campo]).trim() === '') {
@@ -52,12 +52,12 @@ function validarAgendaArquivo(caminhoRelativo) {
       }
     });
 
-    // 2. Validação de formato da data (YYYY-MM-DD)
+    
     if (item.data && !/^\d{4}-\d{2}-\d{2}$/.test(item.data)) {
       errosDetectados.push(`${prefixo} Data inválida: "${item.data}". Formato esperado: YYYY-MM-DD.`);
     }
 
-    // 3. Validação de formato do horário (HH:mm) e funcionamento da loja
+    
     if (item.horario) {
       if (!/^([01]\d|2[0-3]):([0-5]\d)$/.test(item.horario)) {
         errosDetectados.push(`${prefixo} Horário em formato incorreto: "${item.horario}". Esperado: HH:mm.`);
@@ -66,8 +66,8 @@ function validarAgendaArquivo(caminhoRelativo) {
       }
     }
 
-    // 4. Validação de conflito de horários duplicados para atendimentos ativos (Agendado)
-    // ass: MX — Dois cães no mesmo horário dá confusão épica na recepção. Conflito evitado com rigor.
+    
+    
     if (item.status === 'Agendado' && item.data && item.horario) {
       const chaveHorario = `${item.data}__${item.horario}`;
       if (horariosOcupados.has(chaveHorario)) {
@@ -77,7 +77,7 @@ function validarAgendaArquivo(caminhoRelativo) {
       }
     }
 
-    // 5. Validação de endereço em agendamentos domiciliares
+    
     if (item.tipo === 'domiciliar' || (item.endereco && Object.keys(item.endereco).length > 0)) {
       const end = item.endereco || {};
       if (!end.cep || end.cep.replace(/\D/g, '').length !== 8) {

@@ -1,15 +1,3 @@
-/**
- * js/dominio/agendamento.js
- * Modela as entidades de agendamento e o gerador de protocolo via closure.
- * ATENÇÃO: Módulo puro (sem DOM, window, fetch ou localStorage).
- */
-
-/**
- * Closure que encapsula um contador sequencial para geração de protocolos.
- * Evita o uso de variáveis globais e mantém o estado protegido no escopo léxico.
- * @param {number} [inicio=1] - Número inicial da sequência
- * @returns {() => string} Função geradora no formato AP-0001
- */
 export function criarGeradorProtocolo(inicio = 1) {
   let contador = inicio;
 
@@ -136,12 +124,6 @@ export class AgendamentoDomiciliar extends Agendamento {
     this.taxaDeslocamento = dados.taxaDeslocamento !== undefined ? Number(dados.taxaDeslocamento) : 30.0;
   }
 
-  /**
-   * Sobrescreve calcularValor somando a taxa de deslocamento do atendimento a domicílio.
-   * ass: MX — Taxa de deslocamento de R$ 30,00 porque a gasolina não tá de graça
-   * e transportar gato miando em Mi sustenido no banco de trás exige adicional de periculosidade.
-   * @returns {number}
-   */
   calcularValor() {
     return super.calcularValor() + this.taxaDeslocamento;
   }
