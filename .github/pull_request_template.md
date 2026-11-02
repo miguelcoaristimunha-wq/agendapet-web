@@ -33,9 +33,18 @@ Finalizacao das funcionalidades centrais da agenda do pet shop Patinhas & Cia, i
 ---
 
 ### Evidencias
-- Captura de tela da sessao de depuracao do VS Code: `docs/depuracao.png`
-- Relatorio do bug resolvido: `docs/bug-report.md`
-- Quadro Kanban com todos os 12 tickets detalhados: `docs/kanban.md`
+
+#### 1. Depuracao do BUG-001 no VS Code
+![Sessao de Depuracao do VS Code](../docs/depuracao.png)
+
+- Imagem: [`docs/depuracao.png`](../docs/depuracao.png)
+- Relatorio detalhado: [`docs/bug-report.md`](../docs/bug-report.md)
+
+#### 2. Quadro Kanban da Sprint
+![Quadro Kanban da Sprint](../docs/kanban.png)
+
+- Imagem: [`docs/kanban.png`](../docs/kanban.png)
+- Documentacao das historias: [`docs/kanban.md`](../docs/kanban.md)
 
 ---
 
