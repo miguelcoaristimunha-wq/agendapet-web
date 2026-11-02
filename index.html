@@ -248,17 +248,19 @@
             <input type="search" id="campo-busca" placeholder="Buscar por tutor, pet ou protocolo (atalho: /)" autocomplete="off">
           </div>
 
-          <div class="filtro-data-wrapper">
-            <label for="filtro-data" class="rotulo-filtro-data">Data:</label>
-            <input type="date" id="filtro-data" title="Filtrar atendimentos por dia">
-            <button type="button" id="btn-limpar-data" class="btn-limpar-data" title="Exibir todas as datas">Todas</button>
-          </div>
+          <div class="linha-controles-filtros">
+            <div class="filtro-data-wrapper">
+              <label for="filtro-data" class="rotulo-filtro-data">Data:</label>
+              <input type="date" id="filtro-data" title="Filtrar atendimentos por dia">
+              <button type="button" id="btn-limpar-data" class="btn-limpar-data" title="Exibir todas as datas">Todas</button>
+            </div>
 
-          <div id="botoes-filtro-status" class="grupo-botoes-status" role="group" aria-label="Filtrar por status">
-            <button type="button" class="btn-filtro filtro-ativo" data-status="Todos" aria-pressed="true">Todos</button>
-            <button type="button" class="btn-filtro" data-status="Agendado" aria-pressed="false">Agendados</button>
-            <button type="button" class="btn-filtro" data-status="Concluído" aria-pressed="false">Concluídos</button>
-            <button type="button" class="btn-filtro" data-status="Cancelado" aria-pressed="false">Cancelados</button>
+            <div id="botoes-filtro-status" class="grupo-botoes-status" role="group" aria-label="Filtrar por status">
+              <button type="button" class="btn-filtro filtro-ativo" data-status="Todos" aria-pressed="true">Todos</button>
+              <button type="button" class="btn-filtro" data-status="Agendado" aria-pressed="false">Agendados</button>
+              <button type="button" class="btn-filtro" data-status="Concluído" aria-pressed="false">Concluídos</button>
+              <button type="button" class="btn-filtro" data-status="Cancelado" aria-pressed="false">Cancelados</button>
+            </div>
           </div>
         </div>
 
