@@ -162,5 +162,47 @@
     "status": "Agendado",
     "valor": 120.0,
     "observacoes": "Calopsita: aparo de asa e revisão preventiva."
+  },
+  {
+    "id": "ag-010",
+    "protocolo": "AP-0010",
+    "tipo": "presencial",
+    "tutor": "Larissa Medeiros",
+    "telefone": "(48) 99876-1122",
+    "pet": "Simba",
+    "especie": "Cão",
+    "servicoId": "srv-banho-tosa",
+    "servicoNome": "Banho e Tosa Completa",
+    "data": "2026-11-02",
+    "horario": "10:00",
+    "status": "Agendado",
+    "valor": 85.0,
+    "observacoes": "Golden Retriever muito brincalhão; secagem caprichada e perfume hipoalergênico suave."
+  },
+  {
+    "id": "ag-011",
+    "protocolo": "AP-0011",
+    "tipo": "domiciliar",
+    "tutor": "Guilherme Santos",
+    "telefone": "(48) 98711-2233",
+    "pet": "Mia",
+    "especie": "Gato",
+    "servicoId": "srv-consulta-vet",
+    "servicoNome": "Consulta Veterinária Geral",
+    "data": "2026-11-02",
+    "horario": "14:30",
+    "status": "Agendado",
+    "valor": 150.0,
+    "taxaDeslocamento": 30.0,
+    "observacoes": "Consulta preventiva em domicílio com checagem de dentes e vacinas.",
+    "endereco": {
+      "cep": "88015-100",
+      "logradouro": "Avenida Mauro Ramos",
+      "numero": "500",
+      "complemento": "Casa 2",
+      "bairro": "Centro",
+      "cidade": "Florianópolis",
+      "uf": "SC"
+    }
   }
 ]

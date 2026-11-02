@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   await carregarCatalogo();
   await inicializarBaseDeDados();
+  ajustarFiltroDataInicial();
 
   atualizarInterfaceCompleta();
 });
@@ -96,6 +97,27 @@ function inicializarDataHoje() {
   if (inputFiltroData) {
     inputFiltroData.value = hojeIso;
     estado.dataFiltro = hojeIso;
+  }
+}
+
+/**
+ * Ajusta o filtro inicial de data após carregar os agendamentos.
+ * Se a data de hoje possuir registros, filtra por hoje; caso contrário,
+ * inicializa exibindo todas as datas cadastradas para não apresentar tela vazia.
+ */
+function ajustarFiltroDataInicial() {
+  const hojeIso = new Date().toISOString().slice(0, 10);
+  const inputFiltroData = document.getElementById('filtro-data');
+  const temAgendamentosHoje = estado.agendamentos.some(item => item.data === hojeIso);
+
+  if (inputFiltroData) {
+    if (temAgendamentosHoje) {
+      inputFiltroData.value = hojeIso;
+      estado.dataFiltro = hojeIso;
+    } else {
+      inputFiltroData.value = '';
+      estado.dataFiltro = '';
+    }
   }
 }
 
@@ -511,6 +533,16 @@ function configurarEventosFiltros() {
     inputFiltroData.addEventListener('change', e => {
       estado.dataFiltro = e.target.value;
       atualizarInterfaceCompleta();
+    });
+  }
+
+  const btnLimparData = document.getElementById('btn-limpar-data');
+  if (btnLimparData) {
+    btnLimparData.addEventListener('click', () => {
+      if (inputFiltroData) inputFiltroData.value = '';
+      estado.dataFiltro = '';
+      atualizarInterfaceCompleta();
+      exibirToast('Exibindo agendamentos de todas as datas.', 'aviso', 1800);
     });
   }
 }

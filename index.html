@@ -11,6 +11,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    if (window.location.protocol === 'file:') {
+      window.addEventListener('DOMContentLoaded', function () {
+        var aviso = document.createElement('div');
+        aviso.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#b91c1c;color:#ffffff;padding:14px 20px;font-family:system-ui,-apple-system,sans-serif;font-size:13px;line-height:1.5;box-shadow:0 4px 16px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:space-between;gap:12px;';
+        aviso.innerHTML = '<div><strong>Atenção:</strong> O site foi aberto direto pelo arquivo HTML (<code>file://</code>). O navegador bloqueia os módulos JavaScript (ES Modules) nesse modo por segurança.<br>Para rodar com todas as funções 100% ativas, <strong>dê um duplo clique no arquivo &quot;iniciar-site.bat&quot;</strong> na pasta do projeto ou execute <code>npm start</code> no terminal.</div><button onclick="this.parentElement.remove()" style="background:#ffffff;color:#b91c1c;border:none;padding:6px 14px;border-radius:6px;font-weight:700;cursor:pointer;flex-shrink:0;">Entendi</button>';
+        document.body.prepend(aviso);
+      });
+    }
+  </script>
 </head>
 <body>
   <!-- Link de acessibilidade para navegação rápida por teclado (US01) -->
@@ -241,6 +251,7 @@
           <div class="filtro-data-wrapper">
             <label for="filtro-data" class="rotulo-filtro-data">Data:</label>
             <input type="date" id="filtro-data" title="Filtrar atendimentos por dia">
+            <button type="button" id="btn-limpar-data" class="btn-limpar-data" title="Exibir todas as datas">Todas</button>
           </div>
 
           <div id="botoes-filtro-status" class="grupo-botoes-status" role="group" aria-label="Filtrar por status">
