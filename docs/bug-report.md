@@ -1,85 +1,72 @@
-# Relatório de Bug — BUG-001: Atendimentos Cancelados Somados no Faturamento do Dia
+Relatorio de Investigacao de Bug — BUG-001
 
-**Projeto:** AgendaPet Web — Patinhas & Cia  
-**Data da Identificação:** 28/10/2026  
-**Severidade:** Alta (Impacto financeiro direto no fechamento de caixa do pet shop)  
-**Ticket Relacionado:** US07 / US12  
-**Autor:** Miguel Corrêa  
-**Status:** [Corrigido] Validado via Depurador e Testes Unitários
+Projeto: AgendaPet Web (Patinhas e Cia)
+Autor: Miguel Correa
+Data: 28/10/2026
+Gravidade: Alta (afeta diretamente o fechamento do caixa da loja)
+Tickets relacionados: US07 e US12
+Status: Resolvido e testado
 
----
 
-## 1. Título do Defeito
-> **Faturamento diário somava indevidamente o valor de atendimentos cancelados ao executar o fechamento do dia.**
+O Problema Encontrado
 
----
+Durante os testes de fechamento do dia, percebi uma divergencia seria nos valores: o sistema estava somando o dinheiro de agendamentos cancelados no faturamento final do caixa.
 
-## 2. Passos para Reproduzir
-1. Abrir o arquivo `data/agenda-exemplo.json` ou cadastrar agendamentos na interface web.
-2. Criar um agendamento de "Banho e Tosa Completa" (R$ 85,00) com status `Concluído`.
-3. Criar outro agendamento de "Vacinação" (R$ 90,00) com status alterado para `Cancelado`.
-4. Executar no terminal o script de fechamento: `npm run fechamento` ou verificar o card de faturamento na interface.
-5. Observar o valor total exibido no campo **"Faturamento Efetivado"**.
+Se um cliente desmarcava uma vacina de 90 reais, o valor continuava entrando como receita ganha, o que geraria um erro grave na contabilidade do pet shop no fim do expediente.
 
----
 
-## 3. Resultado Obtido vs. Resultado Esperado
+Passos que fiz para reproduzir o erro
 
-- **Resultado Obtido (Incorreto):**
-  O faturamento do dia acusava **R$ 175,00** (85 + 90). O sistema estava contabilizando a receita de atendimentos que os tutores haviam cancelado previamente.
+1. Abri o painel web em http://localhost:3000 com os dados de exemplo carregados.
+2. Marquei um atendimento de Banho e Tosa de 85 reais como Concluido.
+3. Marquei outro agendamento de Vacinacao de 90 reais como Cancelado.
+4. Fui olhar o painel da direita no Fechamento do Caixa e tambem rodei no terminal o comando npm run fechamento.
+5. O sistema mostrou um faturamento de 175 reais, somando os 85 com os 90 do cliente que cancelou.
 
-- **Resultado Esperado (Correto):**
-  O faturamento deveria totalizar exatamente **R$ 85,00**, computando única e exclusivamente os serviços com status `Concluído`, já que clientes cancelados não geram receita no caixa.
 
----
+O que deveria acontecer
 
-## 4. Análise de Causa Raiz com Depurador (VS Code)
+O caixa deveria registrar apenas 85 reais, porque cliente cancelado nao foi atendido e nao pagou pelo servico.
 
-Para localizar a raiz do defeito sem utilizar `console.log` dispersos, abri o projeto no VS Code e iniciei a sessão de depuração usando a configuração criada no arquivo `.vscode/launch.json`: **"Depurar Fechamento do Dia (Node.js ESM)"**.
 
-### Procedimento com o depurador:
-1. **Breakpoint Principal:** Inseri um breakpoint na linha de cálculo da receita dentro do módulo [`js/dominio/fechamento.js`](../js/dominio/fechamento.js).
-2. **Breakpoint Condicional:** Configurei a condição `ag.status === 'Cancelado'` para que o depurador pausasse a execução no instante em que a iteração atingisse o item problemático.
-3. **Painel de Variáveis (Variables):** No escopo *Local*, identifiquei que a variável `acumulador` saltava de R$ 85,00 para R$ 175,00 ao processar o agendamento da cadela Luna (`status: 'Cancelado'`).
-4. **Painel Watch:** Adicionei as expressões observadas:
-   - `ag.status` -> `"Cancelado"`
-   - `ag.calcularValor()` -> `90`
-   - `ag.status !== 'Agendado'` -> `true` *(Aqui estava a falha de lógica!)*
-5. **Call Stack:** Confirmei o fluxo de chamada partindo de `executarFechamentoTerminal` (`scripts/fechamento-dia.js`) até `calcularFechamentoDia` (`fechamento.js`).
+Como investiguei a causa raiz no depurador do VS Code
 
-> **Causa Raiz Identificada:** A condição original do acumulador utilizava `ag.status !== 'Agendado'`, presumindo equivocadamente que tudo que não estava pendente era concluído, esquecendo que o status `Cancelado` também satisfazia a condição negativa.
+Em vez de encher o codigo de console.log para tentar adivinhar onde estava o erro, configurei o depurador nativo do VS Code pelo arquivo launch.json e segui este passo a passo:
 
----
+1. Coloquei um breakpoint na linha do calculo de faturamento dentro do arquivo js/dominio/fechamento.js.
+2. Como a lista tinha varios itens, criei um breakpoint condicional com a expressao ag.status === 'Cancelado', para a execucao pausar exatamente quando chegasse no agendamento cancelado.
+3. No painel lateral do VS Code, olhei a aba Variables e percebi que a variavel acumulador pulava de 85 para 175 reais assim que passava pelo cancelado.
+4. Na aba Watch, adicionei a comparacao que estava no codigo: ag.status !== 'Agendado'. O resultado dava true para o status Cancelado, mostrando claramente a falha logica.
+5. Na pilha de chamadas (Call Stack), confirmei o fluxo partindo do script de terminal ate a funcao pura de calculo.
 
-## 5. Evidência da Sessão de Depuração
 
-Abaixo está o registro da tela do VS Code pausado no breakpoint com as variáveis, Watch e Call Stack ativos:
+Evidencia da sessao de depuracao
 
-![Evidência de Depuração no VS Code](depuracao.png)
+Aqui esta o print da minha tela no VS Code pausada no momento exato do breakpoint, mostrando o painel de variaveis, a pilha de chamadas e o Watch ativos:
 
----
+![Tela do VS Code na sessao de depuracao](depuracao.png)
 
-## 6. Solução Aplicada e Correção
 
-Refatorei a função [`calcularFechamentoDia`](../js/dominio/fechamento.js) para isolar explicitamente a coleção de atendimentos concluídos por meio do método funcional `filter`:
+Como corrigi o codigo
 
-```javascript
-// CÓDIGO ANTERIOR (COM ERRO):
+Abri o arquivo js/dominio/fechamento.js e refatorei a logica de soma. Em vez de usar uma condicao negativa duvidosa, separei os atendimentos usando o metodo filter para pegar apenas quem realmente foi concluido:
+
+Antes (com a falha logica):
 const faturamento = ordenados.reduce((acc, ag) => {
-  if (ag.status !== 'Agendado') return acc + ag.calcularValor(); // BUG! Somava Cancelados
+  if (ag.status !== 'Agendado') return acc + ag.calcularValor();
   return acc;
 }, 0);
 
-// CÓDIGO CORRIGIDO:
-const concluidos = ordenadosPorHorario.filter(ag => ag.status === 'Concluído');
+Depois (corrigido e seguro):
+const concluidos = ordenadosPorHorario.filter(ag => ag.status === 'Concluido');
 const faturamentoConcluidos = concluidos.reduce((acumulador, ag) => {
   return acumulador + ag.calcularValor();
 }, 0);
-```
 
-### Validação da Correção:
-1. Criado teste unitário automatizado em [`tests/dominio.test.js`](../tests/dominio.test.js):
-   - *"Faturamento considera estritamente atendimentos com status Concluído"*
-2. Executado `npm test` -> **100% dos testes aprovados (0 falhas)**.
-3. Executado `npm run fechamento` no terminal -> Faturamento calculado em **R$ 310,00** (excluindo os R$ 90,00 do atendimento cancelado da gata Luna).
-4. Registrado commit de correção: `fix(US07): impede soma de cancelados no faturamento do fechamento` integrado via Pull Request.
+
+Como validei que o bug foi 100% resolvido
+
+1. Criei um teste unitario no arquivo tests/dominio.test.js especifico para validar se atendimentos cancelados ficam de fora do faturamento.
+2. Rodei o comando npm test e todos os 9 testes passaram com sucesso.
+3. Rodei o fechamento no terminal com npm run fechamento e o total calculado bateu certinho em 310 reais, sem nenhum centavo de cancelado entrando no caixa.
+4. Fiz o commit com a mensagem fix(US07): impede soma de cancelados no faturamento do fechamento e abri o Pull Request para integrar na branch principal.

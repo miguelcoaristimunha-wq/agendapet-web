@@ -1,58 +1,50 @@
-### Descricao das Alteracoes
-Finalizacao das funcionalidades centrais da agenda do pet shop Patinhas & Cia, integrando o cadastro de clientes, regras de negocio, prevencao de conflitos de horario e calculo do fechamento financeiro do dia.
+Descricao das Alteracoes
 
-- **Ticket / Historia Relacionada:** US06 e US07 (Agenda do dia e Regras de negocio)
-- **Tipo de alteracao:** feat
+Neste Pull Request eu finalizei a construcao da agenda do dia e as regras de negocio do AgendaPet para a Patinhas e Cia. O foco foi deixar o atendimento da bancada fluido, com calculo automatico de precos, bloqueio de horarios duplicados e fechamento de caixa confiavel.
 
----
+Ticket relacionado: US06 e US07 (Agenda do dia e Regras de negocio)
+Tipo de alteracao: Nova funcionalidade (feat)
 
-### O que mudou?
-- [x] Criacao das classes Agendamento e AgendamentoDomiciliar com heranca e polimorfismo para calculo automatico da taxa de deslocamento (R$ 30,00).
-- [x] Implementacao da closure para geracao deterministica e isolada de protocolos sequenciais (AP-0001, AP-0002) sem poluir o escopo global.
-- [x] Validacao estrita de horarios no expediente oficial (08:00 as 19:00) e bloqueio preventivo de agendamentos duplicados no mesmo horario.
-- [x] Painel de fechamento financeiro do dia com consolidacao de faturamento considerando estritamente atendimentos com status Concluido.
-- [x] Barra de busca no topo da agenda com busca em tempo real, debounce de 200ms e atalhos ergonomicos (/ para focar, Esc para limpar e N para novo cadastro).
-- [x] Filtro rapido de status (Todos, Agendados, Concluidos e Cancelados) e seletor de datas com opcao de visualizar todos os agendamentos.
 
----
+O que eu implementei
 
-### Como testar?
-1. Faca o checkout desta branch: `git checkout feat/US06-agenda-dia`
-2. Inicie o servidor local da aplicacao:
-   ```bash
-   npm start
-   ```
-   (ou de um duplo clique no arquivo `iniciar-site.bat` no Windows).
-3. Abra `http://localhost:3000` no navegador.
-4. **Cenarios testados e validados:**
-   - **Cadastro comum e a domicilio:** Selecione servico presencial e depois domiciliar com CEP para conferir o preenchimento automatico do endereco e o acrescimo de R$ 30,00.
-   - **Prevencao de conflito:** Tente marcar dois pets no mesmo dia e horario; o sistema recusa e exibe mensagem de alerta na tela.
-   - **Mudanca de status e caixa:** Clique em Concluir em um agendamento e confira o faturamento subindo instantaneamente no painel da direita.
-   - **Testes automatizados:** Execute `npm test` para rodar a suite de testes unitarios da camada de dominio.
+- Criei as classes Agendamento e AgendamentoDomiciliar aplicando heranca e polimorfismo. Se o cliente escolhe atendimento em casa, o sistema soma a taxa de deslocamento de 30 reais no total.
+- Fiz uma closure para gerar os codigos de protocolo em sequencia (como AP-0001, AP-0002), mantendo o contador protegido sem usar variaveis globais.
+- Travei os horarios de funcionamento entre 08:00 e 19:00. O sistema avisa na hora se o atendente tentar cadastrar um horario invalido.
+- Implementei a regra que impede marcar dois pets no mesmo horario se o agendamento estiver ativo.
+- Deixei o fechamento do caixa somando apenas os agendamentos que foram de fato concluidos, para o dono do pet shop nao ter surpresas no faturamento.
+- Montei a barra de busca no topo com atraso de 200 milissegundos para nao travar a tela enquanto digita, alem de filtros rapidos por status e data.
 
----
 
-### Evidencias
+Como testar
 
-#### 1. Depuracao do BUG-001 no VS Code
+1. Faca o checkout desta branch: git checkout feat/US06-agenda-dia
+2. Abra o projeto rodando npm start no terminal ou dando duplo clique no arquivo iniciar-site.bat.
+3. Acesse http://localhost:3000 no navegador.
+4. Testes que eu realizei na pratica:
+   - Tentei agendar um servico presencial e depois um domiciliar com CEP para checar o endereco automatico e a taxa extra.
+   - Tentei marcar dois atendimentos no mesmo horario para validar o aviso de conflito.
+   - Mudei o status de um atendimento para Concluido e vi a receita subir na hora no painel da direita.
+   - No terminal, rodei npm test para rodar os 9 testes unitarios e todos passaram de primeira.
+
+
+Evidencias visuais
+
+Sessao de depuracao do bug no VS Code:
 ![Sessao de Depuracao do VS Code](../docs/depuracao.png)
+Link do arquivo: [docs/depuracao.png](../docs/depuracao.png)
 
-- Imagem: [`docs/depuracao.png`](../docs/depuracao.png)
-- Relatorio detalhado: [`docs/bug-report.md`](../docs/bug-report.md)
-
-#### 2. Quadro Kanban da Sprint
+Quadro Kanban com os cartoes organizados:
 ![Quadro Kanban da Sprint](../docs/kanban.png)
+Link do arquivo: [docs/kanban.png](../docs/kanban.png)
 
-- Imagem: [`docs/kanban.png`](../docs/kanban.png)
-- Documentacao das historias: [`docs/kanban.md`](../docs/kanban.md)
 
----
+Checklist de qualidade
 
-### Checklist da Definicao de Pronto (DoD)
-- [x] Todos os cenarios de aceite testados e aprovados.
-- [x] Codigo desenvolvido em branch propria no padrao Git Flow.
-- [x] Commits organizados no padrao Conventional Commits.
-- [x] Zero erros ou avisos vermelhos no console do navegador e no terminal.
-- [x] Navegacao completa por teclado conferida (Tab, Enter, Espaco e atalhos).
-- [x] Responsividade testada nos breakpoints de 360px, 768px e 1280px.
-- [x] Camada de dominio pura (sem dependencias de DOM, window ou Node) compartilhada com testes e scripts CLI.
+- [x] Testei todos os cenarios da tela e estao funcionando normalmente.
+- [x] O codigo foi feito em branch separada e integrada via Pull Request.
+- [x] Todos os commits seguem o padrao combinado no projeto.
+- [x] O console do navegador nao tem nenhum erro vermelho.
+- [x] A navegacao pelo teclado (Tab, Enter, Espaco e atalhos) responde bem.
+- [x] O visual se adapta bem em telas de celular, tablet e computador.
+- [x] A pasta de regras de negocio nao depende de nada do navegador e roda direto no Node.
