@@ -16,7 +16,6 @@
 - [Regras de Negócio](#regras-de-negócio)
 - [Qualidade, Testes & Depuração](#qualidade-testes--depuração)
 - [Processo Ágil & Gestão da Sprint](#processo-ágil--gestão-da-sprint)
-- [Declaração de Uso de IA](#declaração-de-uso-de-inteligência-artificial)
 
 ---
 
@@ -283,20 +282,3 @@ O ciclo de desenvolvimento seguiu os princípios do Scrum e GitHub Flow:
 2. **ESLint** (Dirk Baeumer): Análise estática de código e boas práticas JS.
 3. **Prettier - Code formatter** (Prettier): Padronização consistente de código.
 4. **GitLens** (GitKraken): Rastreabilidade de commits e histórico de branches.
-
----
-
-## Declaração de Uso de Inteligência Artificial
-
-Em conformidade com as diretrizes de transparência e integridade acadêmica:
-
-- **Onde ferramentas de IA foram consultadas:**
-  1. Criação do conjunto de dados mock inicial de agendamentos em `data/agenda-exemplo.json`;
-  2. Traçado dos caminhos vetoriais da logo e do favicon em `img/logo.svg` e `img/favicon.svg`;
-  3. Brainstorming de casos de borda para cenários de testes unitários.
-- **O que foi desenvolvido, validado e implementado por mim:**
-  1. Toda a lógica de negócios, POO, classes com herança, polimorfismo e closures;
-  2. Manipulação segura do DOM, consumo de APIs e estratégias de fallback de rede;
-  3. Estruturação responsiva com Flexbox, resolução do conflito de especificidade CSS e conformidade WCAG;
-  4. Localização da causa raiz no depurador do VS Code e correção do cálculo financeiro;
-  5. Estou plenamente capacitado a demonstrar e defender tecnicamente cada decisão deste projeto na Sprint Review ao vivo.
