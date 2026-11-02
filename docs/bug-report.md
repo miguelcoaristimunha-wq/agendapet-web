@@ -80,6 +80,6 @@ const faturamentoConcluidos = concluidos.reduce((acumulador, ag) => {
 ### Validação da Correção:
 1. Criado teste unitário automatizado em [`tests/dominio.test.js`](../tests/dominio.test.js):
    - *"Faturamento considera estritamente atendimentos com status Concluído"*
-2. Executado `npm test` ➔ **100% dos testes aprovados (0 falhas)**.
-3. Executado `npm run fechamento` no terminal ➔ Faturamento calculado em **R$ 310,00** (excluindo os R$ 90,00 do atendimento cancelado da gata Luna).
+2. Executado `npm test` -> **100% dos testes aprovados (0 falhas)**.
+3. Executado `npm run fechamento` no terminal -> Faturamento calculado em **R$ 310,00** (excluindo os R$ 90,00 do atendimento cancelado da gata Luna).
 4. Registrado commit de correção: `fix(US07): impede soma de cancelados no faturamento do fechamento` integrado via Pull Request.

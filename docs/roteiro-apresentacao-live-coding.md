@@ -45,7 +45,7 @@ Execute os seguintes testes ao vivo explicando o que acontece:
 5. **Agenda Dinâmica (US06):**
    - Pressione `/` no teclado para focar a busca instantaneamente. Digite "Thor" ou "Pipoca".
    - Pressione `Esc` para limpar a busca.
-   - Mude o status de um item clicando em "✓ Concluir" ou "✕ Cancelar".
+   - Mude o status de um item clicando em "[OK] Concluir" ou "[X] Cancelar".
 6. **Fechamento do Caixa em Tempo Real:**
    - Mostre que o card de faturamento soma apenas os atendimentos com status `Concluído`.
 7. **Responsividade Mobile:**
